@@ -1,0 +1,13 @@
+<div class="card">
+  <h5 class="card-header">Your request was not successful.</h5>
+  <div class="card-body">
+	  <h3>We're sorry but an error has occurred.</h3>
+	  <hr>
+	  {{#if err}}
+	  <h5>The following error occurred:  </h5>
+	  <h4><div style="color:red;">{{err}}</div></h4>
+	  {{/if}}
+	  <br>
+	    <input type="button" class="btn btn-primary btn-lg" value="Go Back" onclick="window.history.back()" /> 
+  </div>
+</div>

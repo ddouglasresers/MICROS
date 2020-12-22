@@ -1,0 +1,414 @@
+ <style>
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+	
+  .html-content, .html-content * {
+    visibility: visible;
+  }
+		
+  .html-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+	 
+</style>
+
+{{#unless queryResult}}
+<form>
+	{{#unless queryString}}
+   <center>
+         <div class="card">
+            <h5 class="card-header">Generate Queries</h5>
+            <div class="card-body">
+
+<span id="block" class="btn btn-primary btn-block">General Queries</span>
+<br>
+<input type="submit" id="btn" name="qname" class="btn btn-primary" value="Query by Date">
+<input type="submit" id="btn" name="qname" class="btn btn-primary" value="Query by Facility">
+<input type="submit" id="btn" name="qname" class="btn btn-primary" value="Query by Description">
+<input type="submit" id="btn" name="qname" class="btn btn-primary" value="Query by Item Number">
+<br><br>
+<input type="submit" id="btn" name="qname" class="btn btn-primary" value="Query by Lab Sample Number">
+<input type="submit" id="btn" name="qname" class="btn btn-primary" value="Query by Sample Type">
+<br><br><hr>
+				
+				
+<span id="block" class="btn btn-dark btn-block">Queries by Results</span>
+<br>
+<input type="submit" id="btn" name="qname" class="btn btn-dark" value="Query by APC Results">
+<input type="submit" id="btn" name="qname" class="btn btn-dark" value="Query by Coliform Results">
+<input type="submit" id="btn" name="qname" class="btn btn-dark" value="Query by Ecoli Results">
+<input type="submit" id="btn" name="qname" class="btn btn-dark" value="Query by Yeast Results">
+<br><br>
+<input type="submit" id="btn" name="qname" class="btn btn-dark" value="Query by Mold Results">
+<input type="submit" id="btn" name="qname" class="btn btn-dark" value="Query by Lactic Acid Results">
+<input type="submit" id="btn" name="qname" class="btn btn-dark" value="Query by Listeria Results">
+<br><br>
+<input type="submit" id="btn" name="qname" class="btn btn-dark" value="Query by Salmonella Results">
+<br><br><hr>
+		
+				
+<span id="block" class="btn btn-danger btn-block">Other Queries</span>
+<br>
+<input type="submit" id="btn" name="qname" class="btn btn-danger" value="Query by A" disabled>
+<input type="submit" id="btn" name="qname" class="btn btn-danger" value="Query by B" disabled>
+<input type="submit" id="btn" name="qname" class="btn btn-danger" value="Query by C" disabled>
+<input type="submit" id="btn" name="qname" class="btn btn-danger" value="Query by X" disabled>
+<br><br>
+<input type="submit" id="btn" name="qname" class="btn btn-danger" value="Query by Y" disabled>
+<input type="submit" id="btn" name="qname" class="btn btn-danger" value="Query by Z" disabled>
+<br><br>		
+				
+            </div>
+	   </div>
+   </center>
+	{{/unless}}
+	
+	{{#if queryString}}
+	
+	   <center>
+      <div class="col-lg-63 mb-3">
+         <div class="card">
+            <h5 class="card-header">Generate {{queryString}}</h5>
+            <div class="card-body">
+               <div class="form-group mb-4">
+                  <div style="float:left; width: 50%">  
+					  
+  <input type="text" class="form-control" class="form-control" name="table" id="table" list="tables" placeholder="Select Database Table">      
+    <datalist id="tables">
+		<option value="Samples">Samples</option>
+    <option value="Swabs">Swabs</option>
+   <option value="Environmental Swabs">Environmental Swabs</option>
+        </datalist>
+                  </div>
+				   
+                  <div style="float:right; width: 50%">
+  <input type="text"  class="form-control" name="plant" list="plantname" placeholder="Select Plant / Facility Number">      
+    <datalist id="plantname">
+		{{#each plantNumber}}
+  <option value="{{this.Plant}}" >{{this.Plant}}</option>
+		{{/each}}
+        </datalist>
+				   </div>
+               </div>
+				<br>
+				
+			<input name="qname" value="{{queryString}}" hidden>
+				
+			{{#if description}}
+              Description / Location Description: <input type="text" name="description" class="form-control mb-2" placeholder="Enter any description, location description or part of description">
+				{{/if}}
+				
+				
+			{{#if itemNumber}}
+				<hr>
+              <h5>Item Number </h5>
+				<div><input type="text" name="itemNum" class="form-control mb-2" placeholder="Enter Item Number"> </div>
+	
+				{{/if}}
+				
+				
+			{{#if labSampleNumber}}
+				<hr>
+              <h5>Lab Sample Number </h5>
+				<div style="float:left; width: 50%">From: <input type="text" name="labSampleNum" class="form-control mb-2" placeholder="Enter Lab Sample Number"> </div>
+				<div style="float:right; width: 50%">
+              To: <input type="text" name="labSampleNum2" class="form-control mb-2" placeholder="Enter Lab Sample Number">
+				</div>
+				{{/if}}		
+
+				
+			{{#if apc}}
+				<hr>
+              <h5>APC Results</h5>
+				<div>APC results greater than <input type="number" name="apcResults" class="form-control mb-2" placeholder="Where APC Results is Greater than What Number?"> </div>
+				{{/if}}					
+				
+								
+			{{#if coliform}}
+				<hr>
+              <h5>Colorform Results</h5>
+				<div>Colorform results greater than <input type="number" name="colorformResults" class="form-control mb-2" placeholder="Where Colorform Results is Greater than What Number?"> </div>
+				{{/if}}					
+								
+								
+			{{#if ecoli}}
+				<hr>
+              <h5>E. Coli Results</h5>
+				<div>E. Coli results greater than <input type="number" name="ecoliResults" class="form-control mb-2" placeholder="Where E. Coli Results is Greater than What Number?"> </div>
+				{{/if}}					
+				
+				
+			{{#if yeast}}
+				<hr>
+              <h5>Yeast Results</h5>
+				<div>Yeast results greater than <input type="number" name="yeastResults" class="form-control mb-2" placeholder="Where Yeast Results is Greater than What Number?"> </div>
+				{{/if}}					
+								
+				
+			{{#if mold}}
+				<hr>
+              <h5>Mold Results</h5>
+				<div>Mold results greater than <input type="number" name="moldResults" class="form-control mb-2" placeholder="Where Mold Results is Greater than What Number?"> </div>
+				{{/if}}					
+				
+											
+			{{#if lacticAcid}}
+				<hr>
+              <h5>Lactic Acid Results</h5>
+				<div>Lactic Acid results greater than <input type="number" name="lacticAcidResults" class="form-control mb-2" placeholder="Where Lactic Acid Results is Greater than What Number?"> </div>
+				{{/if}}					
+
+				{{#if listeria}}
+				<hr>
+				<h5>Listeria Results</h5>
+				<select name="listeriaResults" class="form-control mb-2">
+				 <option value="N/A">N/A</option>
+					{{#each resultTable}}
+				  <option value="{{this.Result}}">{{this.Result}}</option>
+					{{/each}}
+				</select>
+				{{/if}}
+
+				
+				{{#if salmonella}}
+				<hr>
+				<h5>Salmonella Results</h5>
+				<select name="salmonellaResults" class="form-control mb-2">
+				 <option value="N/A">N/A</option>
+					{{#each resultTable}}
+				  <option value="{{this.Result}}">{{this.Result}}</option>
+					{{/each}}
+				</select>
+				{{/if}}
+				
+			
+				
+				{{#if labSampleType}}
+				<hr>
+				<h5>Lab Sample Type</h5>
+				<select name="labSampleType" class="form-control mb-2">
+					{{#each types}}
+				  <option value="{{this.Type}}">{{this.Type}}</option>
+					{{/each}}
+				</select>
+				{{/if}}
+				
+				<input id="hiddendiv" name="hiddendiv" value='0' hidden>
+				
+            </div>
+            <h5 class="card-header">Date Range</h5>
+            <div class="card-body">
+               <div class="form-group mb-4">
+                  <div style="float:left; width: 50%">
+                     Start<input type="date" name="fromdate" value="" class="form-control mb-2" required> 
+                  </div>
+               <div style="float:right; width: 50%">
+				   End<input type="date" id="todate" name="todate" class="form-control mb-2" required>
+				   </div>
+               </div>
+            </div>
+         </div> <br>
+		  	   <button type="submit" class="btn btn-dark btn-lg" onclick="document.getElementById('hiddendiv').value = '0'">Download As XLSX</button>
+		<button type="submit" class="btn btn-dark btn-lg" onclick="document.getElementById('hiddendiv').value = '1';">Download As PDF / Print</button>
+      </div>
+   </center>
+
+	
+	
+<script>
+document.getElementById('todate').value =  new Date().toISOString().slice(0,10);
+</script>
+
+	
+	{{/if}}
+
+	</form>
+{{/unless}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{#if queryResult}}
+	<div class='html-content'>
+<center> <img src="images/logos.png"> <hr style="width:50%;"> <h2>{{datePlant}}</h2> <hr style="width:50%;"> <h2>Date Range: {{fromdate.[5]}}{{fromdate.[6]}}/{{fromdate.[8]}}{{fromdate.[9]}}/{{fromdate.[0]}}{{fromdate.[1]}}{{fromdate.[2]}}{{fromdate.[3]}}       to {{todate.[5]}}{{todate.[6]}}/{{todate.[8]}}{{todate.[9]}}/{{todate.[0]}}{{todate.[1]}}{{todate.[2]}}{{todate.[3]}}</h2></center>
+<br>
+		{{#if samples}}
+	<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col" style="font-size:12px;">Sample</th>
+      <th scope="col" style="font-size:12px;">Tested</th>
+      <th scope="col" style="font-size:12px;">Item#</th>
+      <th scope="col" style="font-size:12px;">Plant</th>
+      <th scope="col" style="font-size:12px;">Description</th>
+      <th scope="col" style="font-size:12px;">UBD</th>
+      <th scope="col" style="font-size:12px;">Manuf Date</th>
+      <th scope="col" style="font-size:12px;">Time</th>
+      <th scope="col" style="font-size:12px;">Type</th>
+      <th scope="col" style="font-size:12px;">Line</th>
+      <th scope="col" style="font-size:12px;">APC</th>
+      <th scope="col" style="font-size:12px;">Coliform</th>
+      <th scope="col" style="font-size:12px;">E.coli</th>      
+	  <th scope="col" style="font-size:12px;">Yeast</th>
+      <th scope="col" style="font-size:12px;">Mold</th>
+      <th scope="col" style="font-size:12px;">Lactic Acid</th>
+      <th scope="col" style="font-size:12px;">Comment</th>
+      <th scope="col" style="font-size:12px;">Cultured?</th>
+    </tr>
+  </thead>
+		
+	{{#each queryResult}}
+		
+<tbody> <tr>
+        <td style="font-size:12px;">{{this.[SampleID]}}</td>
+      <td style="font-size:12px;">{{this.[DateTested]}}</td>
+       <td style="font-size:12px;">{{this.[ItemNumber]}}</td>
+       <td style="font-size:12px;">{{this.[Plant]}}</td>
+      <td style="font-size:12px;">{{this.[Description]}}</td>
+      <td style="font-size:12px;">{{this.[UseByDate]}}</td>
+      <td style="font-size:12px;">{{this.[ManufactureDate]}}</td>
+       <td style="font-size:12px;">{{this.[ManufactureTime]}}</td>
+       <td style="font-size:12px;">{{this.[Type]}}</td>
+       <td style="font-size:12px;">{{this.[Line]}}</td>
+       <td style="font-size:12px;">{{this.[ApcResults]}}</td>
+       <td style="font-size:12px;">{{this.[ColiformResults]}}</td>
+       <td style="font-size:12px;">{{this.[EcoliResults]}}</td>
+       <td style="font-size:12px;">{{this.[YeastResults]}}</td>
+       <td style="font-size:12px;">{{this.[MoldResults]}}</td>
+       <td style="font-size:12px;">{{this.[LacticAcidResults]}}</td>
+      <td style="font-size:12px;">{{this.[Comments]}}</td>
+      <td style="font-size:12px;">{{this.[IsCulturedIngredient]}}</td>
+</tr> </tbody>
+ 
+{{/each}}
+</table>	
+{{/if}}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+				{{#if environmental}}
+	<table class="table table-bordered">
+  <thead>
+    <tr>
+		
+		<th scope="col" style="font-size:12px;">Sample</th>
+      <th scope="col" style="font-size:12px;">Plant</th>
+      <th scope="col" style="font-size:12px;">DateCollected</th>
+      <th scope="col" style="font-size:12px;">TimeCollected</th>
+      <th scope="col" style="font-size:12px;">Type</th>
+      <th scope="col" style="font-size:12px;">SiteIdNumber</th>
+      <th scope="col" style="font-size:12px;">LocationDescription</th>
+      <th scope="col" style="font-size:12px;">ListeriaResult</th>
+      <th scope="col" style="font-size:12px;">SalmonellaResult</th>
+      <th scope="col" style="font-size:12px;">Comment</th>
+
+    </tr>
+  </thead>
+		
+	{{#each queryResult}}
+		
+<tbody> <tr>
+        <td style="font-size:12px;">{{this.[EnvironmentalSwabID]}}</td>
+        <td style="font-size:12px;">{{this.[Plant]}}</td>
+        <td style="font-size:12px;">{{this.[DateCollected]}}</td>
+        <td style="font-size:12px;">{{this.[TimeCollected]}}</td>
+        <td style="font-size:12px;">{{this.[Type]}}</td>
+        <td style="font-size:12px;">{{this.[SiteIdNumber]}}</td>
+        <td style="font-size:12px;">{{this.[LocationDescription]}}</td>
+        <td style="font-size:12px;">{{this.[ListeriaResult]}}</td>
+        <td style="font-size:12px;">{{this.[SalmonellaResult]}}</td>
+        <td style="font-size:12px;">{{this.[Comment]}}</td>
+
+</tr> </tbody>
+ 
+{{/each}}
+</table>	
+{{/if}}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+				{{#if swabs}}
+	<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col" style="font-size:12px;">Sample</th>
+      <th scope="col" style="font-size:12px;">Date Tested</th>
+      <th scope="col" style="font-size:12px;">Plant</th>
+      <th scope="col" style="font-size:12px;">Date Collected</th>
+      <th scope="col" style="font-size:12px;">Time Collected</th>
+      <th scope="col" style="font-size:12px;">Type</th>
+      <th scope="col" style="font-size:12px;">Description</th>
+      <th scope="col" style="font-size:12px;">Food Contact Status</th>
+      <th scope="col" style="font-size:12px;">APC</th>
+      <th scope="col" style="font-size:12px;">Coliform</th>
+      <th scope="col" style="font-size:12px;">E.coli</th>      
+	  <th scope="col" style="font-size:12px;">Yeast</th>
+      <th scope="col" style="font-size:12px;">Mold</th>
+      <th scope="col" style="font-size:12px;">Lactic Acid</th>
+      <th scope="col" style="font-size:12px;">Comment</th>
+    </tr>
+  </thead>
+		
+	{{#each queryResult}}
+		
+<tbody> <tr>
+        <td style="font-size:12px;">{{this.[SwabID]}}</td>
+       <td style="font-size:12px;">{{this.[DateTested]}}</td>
+       <td style="font-size:12px;">{{this.[Plant]}}</td>
+	   <td style="font-size:12px;">{{this.[DateCollected]}}</td>
+       <td style="font-size:12px;">{{this.[TimeCollected]}}</td>
+	   <td style="font-size:12px;">{{this.[Type]}}</td>
+	   <td style="font-size:12px;">{{this.[Description]}}</td>
+       <td style="font-size:12px;">{{this.[FoodContactStatus]}}</td>
+       <td style="font-size:12px;">{{this.[ApcResults]}}</td>
+       <td style="font-size:12px;">{{this.[ColiformResults]}}</td>
+       <td style="font-size:12px;">{{this.[EcoliResults]}}</td>
+       <td style="font-size:12px;">{{this.[YeastResults]}}</td>
+       <td style="font-size:12px;">{{this.[MoldResults]}}</td>
+       <td style="font-size:12px;">{{this.[LacticAcidResults]}}</td>
+      <td style="font-size:12px;">{{this.[Comments]}}</td>
+</tr> </tbody>
+ 
+{{/each}}
+</table>	
+{{/if}}
+		
+		
+		
+		
+
+<script>window.print();</script>
+
+</div>
+{{/if}}

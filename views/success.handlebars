@@ -1,0 +1,37 @@
+{{#unless isZero}}
+<div class="card">
+  <h5 class="card-header">Your request was successful.</h5>
+  <div class="card-body">
+	  <h2>Woohoo!</h2>
+<h3>Your record(s) have been successfully {{type}}.</h3>
+	  <hr>
+	  
+	  {{#if sampleId}}<h5>Your Lab Sample Number is {{sampleId}}. You can access and update the record <a href="/updater?table=samples&sampID={{sampleId}}">here.</a></h5> <br> 
+	  {{/if}}	 
+	  
+	  {{#if swabId}}<h5>Your Lab Sample Number is {{swabId}}. You can access and update the record <a href="/updater?table=swabs&sampID={{swabId}}">here.</a></h5> <br> 
+	  {{/if}}
+	  	  
+	  {{#if environmentalSwabID}}<h5>Your Lab Sample Number is {{environmentalSwabID}}. You can access and update the record <a href="/updater?table=environmental&sampID={{environmentalSwabID}}">here.</a></h5> <br> 
+	  {{/if}}
+	  
+	  
+	  {{#if rowsAffected}}
+	  <br>
+	<h5> {{rowsAffected}} rows were affected in the database table. </h5>
+	  <hr>
+	  {{/if}}
+  <input type="button" class="btn btn-primary btn-lg" value="Go Back" onclick="window.history.back()" /> 
+  </div>
+</div>
+{{/unless}}
+
+{{#if isZero}}
+    <div class="card">
+        <div class="card-body">
+    <h3> Sorry but your spreadsheet was not successfully uploaded.</h3>
+    <hr>
+    <button type="submit" class="btn btn-danger" onclick="window.history.back();">Go Back</button>
+        </div>
+    </div>
+{{/if}}

@@ -1,0 +1,389 @@
+{{#unless table}}
+	   <center>
+      <div class="col-lg-63 mb-3">
+         <div class="card">
+            <h5 class="card-header">Choose the database table that you will be creating a record in</h5>
+            <div class="card-body">
+               <div class="form-group mb-4">
+   <button type="submit" class="btn btn-dark btn-lg" onclick="location.href='create?table=samples';">Samples Table</button>
+   <button type="submit" class="btn btn-dark btn-lg" onclick="location.href='create?table=swabs';">Swabs Table</button>
+				   <br> <hr>
+   <button type="submit" class="btn btn-dark btn-lg" onclick="location.href='create?table=environmental';">Environmental Swabs Table</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </center>
+{{/unless}}
+
+
+	{{#if table}}
+<h3>Database Table: {{#if environmental}}Environmental Swabs{{/if}}{{#if samples}}Samples{{/if}}{{#if swabs}}Swabs{{/if}}</h3>
+<form method="POST">
+	
+		<!-- This is from SWABS table -->
+{{#if swabs}}
+	<table class="table table-hover">
+  <thead>
+    <tr>
+	  <th scope="col">DateTested</th>
+      <th scope="col">Plant</th>
+      <th scope="col">DateCollected</th>
+      <th scope="col">TimeCollected</th>
+      <th scope="col">Type</th>
+	  <th scope="col">Description</th>
+    </tr>
+  </thead>
+
+<input type="text" id="table" name="table" value="swabs" hidden>
+
+<tbody>
+    <tr>
+		
+<td><input type="date" name="DateTested" id="DateTested" value="" class="btn btn-dark" style="width:90%;"></td>			
+		
+		<td>	
+<select name="Plant" id="Plant" class="btn btn-dark dropdown-toggle" onchange="changeEcoliValue()">
+	 <option value="{{savedPlant}}">{{savedPlant}}</option>
+	{{#each plants}}
+  <option value="{{this.Plant}}">{{this.Plant}}</option>
+	{{/each}}
+</select>
+</td>
+
+<td><input type="date" name="DateCollected"  value="" class="btn btn-dark" style="width:90%;"></td>	
+		
+<td><input type="text" name="TimeCollected" value="" class="btn btn-dark"></td>
+
+<td>
+<select name="Type" class="btn btn-dark dropdown-toggle">
+	<option value="{{#if savedSampleType}}{{savedSampleType}}{{/if}}">{{#if savedSampleType}}{{savedSampleType}}{{/if}}</option>
+	{{#each types}}
+  <option value="{{this.Type}}">{{this.Type}}</option>
+	{{/each}}
+</select>
+</td>		
+<td><input type="text" name="Description" id="Description" value="" class="btn btn-dark"></td>
+    </tr>
+ </tbody>
+		</table>
+	
+	<table  class="table table-hover">
+	 <thead>
+    <tr>
+      <th scope="col">APC</th>
+      <th scope="col">Coliform</th>
+      <th scope="col">Ecoli</th>
+      <th scope="col">Yeast</th>
+      <th scope="col">Mold</th>
+	<th scope="col">LacticAcid</th>
+		 </tr>
+  </thead>
+	
+<tbody>
+    <tr>			
+<td><input type="number" name="ApcResults" class="btn btn-dark" style="width:75%;" value=""></td>
+		
+<td><input type="number" name="ColiformResults" id="ColiformResults" class="btn btn-dark" style="width:75%;" value=""></td>
+		
+<td><input type="number" name="EcoliResults" id="EcoliResults" class="btn btn-dark" style="width:75%;" value=""></td>
+		
+<td><input type="number" name="YeastResults" class="btn btn-dark" style="width:75%;" value=""></td>
+		
+<td><input type="number" name="MoldResults" class="btn btn-dark" style="width:75%;" value=""></td>
+
+<td><input type="number" name="LacticAcidResults" class="btn btn-dark" style="width:75%;" value=""></td>
+	</tr>
+		</tbody>
+	</table>
+	
+<table  class="table table-hover">
+	<thead>
+    <tr>
+      <th scope="col">Comments</th>
+      <th scope="col">Food Contact Status</th>
+    </tr>
+  </thead>
+	
+<tbody>
+    <tr>
+						
+<td><textarea name="Comments" value="" class="btn btn-dark" rows="10" cols="70"></textarea></td>
+		
+<td><select name="FoodContactStatus" class="btn btn-dark dropdown-toggle">
+	<option value="FALSE">FALSE</option>
+		<option value="TRUE">TRUE</option>
+		<option value="">N/A</option>
+</select><td>
+	</tr>
+		</tbody>
+	</table>
+	
+<script>
+document.getElementById('DateTested').value =  new Date().toISOString().slice(0,10);
+</script>
+
+{{/if}}
+
+	
+	<!-- This is from SAMPLES table -->
+{{#if samples}}
+	<table class="table table-hover">
+  <thead>
+    <tr>
+	  <th scope="col">DateTested</th>
+      <th scope="col">ItemNumber</th>
+      <th scope="col">Plant</th>
+      <th scope="col">Description</th>
+      <th scope="col">UseByDate</th>
+    </tr>
+  </thead>
+
+<input type="text" id="table" name="table" value="samples" hidden>
+
+<tbody>
+    <tr>
+		
+<td><input type="date" name="DateTested" id="DateTested" value="{{#if dateTested}}{{dateTested}}{{/if}}" class="btn btn-dark" style="width:90%;"></td>		
+		
+<td>	
+<input type="text" name="ItemNumber" id="ItemNumber" class="btn btn-dark dropdown-toggle" onchange="document.location.href='create?table=samples&ItemNumber=' + document.getElementById('ItemNumber').value + '&itemDescription=' + document.getElementById(document.getElementById('ItemNumber').value).className + '&dateTested=' + document.getElementById('DateTested').value" list="UPCLIST" value="{{#if itemNumber}}{{itemNumber}}{{/if}}">      
+<datalist id="UPCLIST">
+	{{#each itemInfo}}
+  <option value="{{this.Item}}" id="{{this.Item}}" class="{{this.ItemDescription}}">{{this.Item}} - {{this.ItemDescription}}</option>
+	{{/each}}
+</datalist>
+</td>
+		
+<td>	
+<select name="Plant" id="Plant" class="btn btn-dark dropdown-toggle" onchange="changeEcoliValue()">
+	 <option value="{{savedPlant}}">{{savedPlant}}</option>
+	{{#each plants}}
+  <option value="{{this.Plant}}">{{this.Plant}}</option>
+	{{/each}}
+</select>
+</td>
+
+<td><input type="text" name="Description" id="Description" value="{{#if itemDescription}}{{itemDescription}}{{/if}}" class="btn btn-dark" style="width:100%;"></td>
+	
+<td><input type="date" name="UseByDate" id="UseByDate" value="" class="btn btn-dark" style="width:90%;"></td>
+
+    </tr>
+ </tbody>
+		</table>
+	
+<table  class="table table-hover">
+	<thead>
+    <tr>
+	<th scope="col">Manuf. Date</th>
+      <th scope="col">Manuf. Time</th>
+      <th scope="col">Type</th>
+      <th scope="col">Line</th>
+    </tr>
+  </thead>
+
+<tbody>
+    <tr>	
+		
+	<td><input type="date" name="ManufactureDate" value="" class="btn btn-dark"></td>
+
+<td><input type="text" name="ManufactureTime" value="" class="btn btn-dark"></td>
+		
+<td>
+<select name="Type" class="btn btn-dark dropdown-toggle">
+	<option value="{{#if savedSampleType}}{{savedSampleType}}{{/if}}">{{#if savedSampleType}}{{savedSampleType}}{{/if}}</option>
+	{{#each types}}
+  <option value="{{this.Type}}">{{this.Type}}</option>
+	{{/each}}
+</select>
+</td>
+<td><input type="text" name="Line" value="" class="btn btn-dark"></td>
+	</tr>
+	 </tbody>
+			</table>
+	
+	<table  class="table table-hover">
+	 <thead> 
+    <tr>
+      <th scope="col">APC</th>
+      <th scope="col">Coliform</th>
+      <th scope="col">Ecoli</th>
+      <th scope="col">Yeast</th>
+      <th scope="col">Mold</th>
+	<th scope="col">LacticAcid</th>
+		 </tr>
+  </thead>
+	
+<tbody>
+    <tr>			
+<td><input type="number" name="ApcResults" class="btn btn-dark" style="width:75%;" value=""></td>
+		
+<td><input type="number" name="ColiformResults" id="ColiformResults" class="btn btn-dark" style="width:75%;" value=""></td>
+		
+<td><input type="number" name="EcoliResults" id="EcoliResults" class="btn btn-dark" style="width:75%;" value=""></td>
+		
+<td><input type="number" name="YeastResults" class="btn btn-dark" style="width:75%;" value=""></td>
+		
+<td><input type="number" name="MoldResults" class="btn btn-dark" style="width:75%;" value=""></td>
+
+<td><input type="number" name="LacticAcidResults" class="btn btn-dark" style="width:75%;" value=""></td>
+
+	</tr>
+		</tbody>
+	</table>
+	
+<table  class="table table-hover">
+	<thead>
+    <tr>
+      <th scope="col">Comments</th>
+      <th scope="col">IsCulturedIngredient</th>
+    </tr>
+  </thead>
+	
+<tbody>
+    <tr>
+						
+<td><textarea name="Comments" value="" class="btn btn-dark" rows="10" cols="70"></textarea></td>
+		
+<td><select name="IsCulturedIngredient" class="btn btn-dark dropdown-toggle">
+	<option value="FALSE">FALSE</option>
+		<option value="TRUE">TRUE</option>
+		<option value="">N/A</option>
+</select><td>
+		
+	</tr>
+		</tbody>
+	
+	</table>
+	
+	
+<script>
+{{#unless dateTested}}
+document.getElementById('DateTested').value =  new Date().toISOString().slice(0,10);
+	{{/unless}}
+</script>
+
+{{/if}}
+	
+
+<!-- This is from ENVIRONMENTAL_SWABS table -->
+{{#if environmental}}
+	<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Date Collected</th>
+      <th scope="col">Time Collected</th>
+	   <th scope="col">Plant</th>
+      <th scope="col">SiteIdNumber</th>
+      <th scope="col">Type</th>
+	  <th scope="col">Listeria</th>
+      <th scope="col">Salmonella</th>
+    </tr>
+  </thead>
+
+<input type="text" id="table" name="table" value="environmental" hidden>
+
+<tbody>
+    <tr>	
+			
+<td><input type="date" name="DateCollected" id="DateCollected" value="{{#if dateCollected}}{{dateCollected}}{{/if}}" class="btn btn-dark" style="width:90%;"></td>
+<td><input type="text" name="TimeCollected" id="TimeCollected" value="{{#if timeCollected}}{{timeCollected}}{{/if}}" class="btn btn-dark" style="width:85%;"></td>
+
+				<td>	
+<select name="Plant" id="Plant" class="btn btn-dark dropdown-toggle">
+	 <option value="{{#if plant}}{{plant}}{{else}}{{savedPlant}}{{/if}}">{{#if plant}}{{plant}}{{else}}{{savedPlant}}{{/if}}</option>
+	{{#each plants}}
+  <option value="{{this.Plant}}">{{this.Plant}}</option>
+	{{/each}}
+</select>
+</td>
+			
+		
+<td>
+<select name="SiteIdNumber" id="SiteIdNumber" class="btn btn-dark dropdown-toggle" onchange="
+siteIdNumChange()">>
+	  <option value="{{#if siteNumber}}{{siteNumber}}{{/if}}">{{#if siteNumber}}{{siteNumber}}{{/if}}</option>
+	{{#each siteDescriptions}}
+  <option value="{{this.SiteDescription}}&siteNumber={{this.SiteNumber}}">{{this.SiteNumber}}</option>
+	{{/each}}
+</select>
+</td>
+		
+		<td>
+<select name="Type" id="Type" class="btn btn-dark dropdown-toggle">
+	<option value="{{#if sampleType}}{{sampleType}}{{else}}{{#if savedSampleType}}{{savedSampleType}}{{/if}}{{/if}}">{{#if sampleType}}{{sampleType}}{{else}}{{#if savedSampleType}}{{savedSampleType}}{{/if}}{{/if}}</option>
+	{{#each types}}
+  <option value="{{this.Type}}">{{this.Type}}</option>
+	{{/each}}
+</select>
+</td>
+					
+		<td>
+<select name="ListeriaResult" class="btn btn-dark dropdown-toggle">
+<option value="N/A">N/A</option>
+	{{#each resultTable}}
+  <option value="{{this.Result}}">{{this.Result}}</option>
+	{{/each}}
+</select>
+</td>
+		
+		<td>
+<select name="SalmonellaResult" class="btn btn-dark dropdown-toggle">
+	<option value="N/A">N/A</option>
+	{{#each resultTable}}
+  <option value="{{this.Result}}">{{this.Result}}</option>
+	{{/each}}
+</select>
+</td>
+		
+    </tr>
+ </tbody>
+	</table>
+
+	<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Comment</th>      
+	  <th scope="col">Location Description</th>
+    </tr>
+  </thead>
+
+<tbody>
+    <tr>	
+
+	<td><textarea name="Comment" value="" class="btn btn-dark" rows="10" cols="60"></textarea></td>
+		
+		<td><textarea name="LocationDescription" id="LocationDescription" class="btn btn-dark" rows="5">{{#if plantTenIsTrue}}{{#if siteDescription}}{{siteDescription}}{{/if}}{{/if}} </textarea></td>
+				
+    </tr>
+ </tbody>
+	</table>
+
+	
+<script>
+	
+	{{#unless dateCollected}}
+	document.getElementById('DateCollected').value =  new Date().toISOString().slice(0,10);
+	{{/unless}}
+function siteIdNumChange() {
+    if (document.getElementById('Plant').value == '10') {
+        document.location.href = 'create?table=environmental&siteDescription=' + document.getElementById('SiteIdNumber').value + '&plant=' + document.getElementById('Plant').value + '&timeCollected=' + document.getElementById('TimeCollected').value + '&sampleType=' + document.getElementById('Type').value + '&currentDate=' + document.getElementById('DateCollected').value;
+    }
+}
+</script>
+	
+{{/if}}
+
+	
+<hr>
+<button class="btn btn-dark btn-lg">Create Record Now</button>
+</form>
+
+<script>
+		function changeEcoliValue(){
+	if ((document.getElementById('Plant').value == '20' || document.getElementById('Plant').value == '21' || document.getElementById('Plant').value == '23' || document.getElementById('Plant').value == '26') && document.getElementById('ColiformResults').value == '0'){
+		document.getElementById('EcoliResults').value = 0;
+	}
+}
+</script>
+	{{/if}}

@@ -1,0 +1,260 @@
+	<script>
+		// if Coliform equals zero, then set the corresponding E.coli field to 0 as well
+		function setEcoliToZero(ID){
+			if(document.getElementById(ID+ "ColiformResults").value == '0'){
+				document.getElementById(ID+ "EcoliResults").value = '0';
+			}
+		}
+</script>
+
+{{#unless isPost}}
+{{#unless table}}
+	   <center>
+      <div class="col-lg-63 mb-3">
+         <div class="card">
+            <h5 class="card-header">Choose Database Table to Search Through</h5>
+            <div class="card-body">
+               <div class="form-group mb-4">
+   <button type="submit" class="btn btn-primary btn-lg" onclick="location.href='/?table=samples';">Samples Table</button>
+   <button type="submit" class="btn btn-primary btn-lg" onclick="location.href='/?table=swabs';">Swabs Table</button>
+				   <br> <hr>
+   <button type="submit" class="btn btn-primary btn-lg" onclick="location.href='/?table=environmental';">Environmental Swabs Table</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </center>
+{{/unless}}
+{{/unless}}
+
+
+{{#unless results}}
+	{{#if table}}
+<form method="GET">
+   <center>
+      <div class="col-lg-63 mb-3">
+         <div class="card">
+            <h5 class="card-header">Search for Records in {{table}} {{#if environmental}} swabs {{/if}}table</h5>
+            <div class="card-body">
+               <div class="form-group mb-4">
+				   <input type="text" id="isReady" name="isReady" class="form-control mb-2" value="1" hidden>
+				   <input type="text" name="table" class="form-control mb-2" value="{{table}}" hidden>
+                  <div style="float:left; width: 50%">
+                    {{#if samples}} Item Number / Sample Number {{else}} Sample Number{{/if}} <input type="text" id="ItemNumber" name="ItemNumber" class="form-control mb-2" placeholder="Enter Item Number">
+                  </div>
+                  <div style="float:right; width: 50%">
+                    Sample Type<input type="text" id="SampleType" name="SampleType" class="form-control mb-2" placeholder="Enter Sample Type">
+                  </div>      
+				   <div>
+                    Plant Number(s)<input type="text" name="Plant" class="form-control mb-2" placeholder="Enter plant numbers, separated by commas. i.e. 10,20,16,99">
+                  </div>
+               </div>
+            </div>
+            <h5 class="card-header">Date Range</h5>
+            <div class="card-body">
+               <div class="form-group mb-4">
+                  <div style="float:left; width: 50%">
+                     Start<input type="date" id="fromdate" name="fromdate" value="" class="form-control mb-2" required>
+                  </div>
+                  <div style="float:right; width: 50%">
+                     End<input type="date" id="todate" name="todate" value="" class="form-control mb-2">
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+	</center>
+   <button class="btn btn-primary btn-lg">Search Database Now</button>
+</form>
+
+<script>
+document.getElementById('todate').value =  new Date().toISOString().slice(0,10);
+</script>
+
+	{{/if}}
+{{/unless}}
+
+{{#if results}}
+<form method="POST">
+<button class="btn btn-primary btn-lg">Update Record(s)</button>
+	<hr>
+{{/if}}
+
+<!-- This is from SAMPLES table -->
+{{#if results}}
+{{#if samples}}
+<h2>{{results.length}} records found in Samples table.</h2>
+	<div id="html-content" name="html-content" class='html-content'>
+	<table class="table table-hover">
+  <thead id="th">
+    <tr>
+      <th scope="col">Sample#/Plant</th>
+      <th scope="col">Date Tested</th>
+      <th scope="col">Item #</th>
+      <th scope="col">APC</th>
+      <th scope="col">Coliform</th>
+      <th scope="col">E.coli</th>      
+	  <th scope="col">Yeast</th>
+      <th scope="col">Mold</th>
+      <th scope="col">Lactic Acid</th>
+    </tr>
+  </thead>
+		
+		<input type="text" id="table" name="table" value="samples" hidden>
+		<input type="text" id="isReady" name="isReady" class="form-control mb-2" value="1" hidden>
+	{{#each results}}
+	
+<tbody> <tr>
+
+<td> <a href="updater?table=samples&sampID={{this.SampleID}}">{{this.SampleID}}</a> / {{this.Plant}}</td>
+<td><input tabindex="2" type="date" style="width: 95%" id="DateTested" name="{{this.SampleID}}DateTested" value="{{this.DateTested}}" class="form-control mb-2"></td>
+<td><input tabindex="3" type="text" style="width: 115%" id="ItemNumber" name="{{this.SampleID}}ItemNumber" value="{{this.ItemNumber}}" class="form-control mb-2"></td>
+<td><input tabindex="4" type="number" style="width: 100%" id="ApcResults" name="{{this.SampleID}}ApcResults" value="{{this.ApcResults}}" class="form-control mb-2"></td>
+<td><input tabindex="5" type="number" id="{{this.SampleID}}ColiformResults" name="{{this.SampleID}}ColiformResults" value="{{this.ColiformResults}}" class="form-control mb-2" onchange="setEcoliToZero({{this.SampleID}})"></td>
+<td><input tabindex="6" type="number" style="width: 100%" id="{{this.SampleID}}EcoliResults" name="{{this.SampleID}}EcoliResults" value="{{this.EcoliResults}}" class="form-control mb-2"></td>
+<td><input tabindex="7" type="number" style="width: 100%" id="YeastResults" name="{{this.SampleID}}YeastResults" value="{{this.YeastResults}}" class="form-control mb-2"></td>
+<td><input tabindex="8" type="number" id="MoldResults" name="{{this.SampleID}}MoldResults" value="{{this.MoldResults}}" class="form-control mb-2"></td>
+<td><input tabindex="9" type="number" id="LacticAcidResults" name="{{this.SampleID}}LacticAcidResults" value="{{this.LacticAcidResults}}" class="form-control mb-2"></td>
+</tr> </tbody>
+ 
+{{/each}}
+</table>
+		</div>
+	<script>document.getElementById("html-content").addEventListener("scroll", function(){
+   var translate = "translate(0,"+this.scrollTop+"px)";
+   this.querySelector("thead").style.transform = translate;
+});</script>
+	<style>#html-content {
+    overflow: auto;
+    height: 400px;
+}
+		
+		thead {background-color: #444543;}
+		th {color:white}
+	
+	</style>
+{{/if}}
+{{/if}}
+
+
+<!-- This is from SWABS table -->
+{{#if results}}
+{{#if swabs}}
+	
+<form method="POST">
+<h2>{{results.length}} records found in Swabs table.</h2>
+<br>
+	<div id="html-content">
+	<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Sample#/Plant</th>
+      <th scope="col">Date Tested</th>
+      <th scope="col">APC</th>
+      <th scope="col">Coliform</th>
+      <th scope="col">E.coli</th>      
+	  <th scope="col">Yeast</th>
+      <th scope="col">Mold</th>
+      <th scope="col">Lactic Acid</th>
+    </tr>
+  </thead>
+		
+		<input type="text" id="table" name="table" value="swabs" hidden>
+		<input type="text" id="isReady" name="isReady" class="form-control mb-2" value="1" hidden>
+		
+	{{#each results}}
+		
+		<tbody> <tr>
+<td><a href="updater?table=swabs&sampID={{this.SwabID}}">{{this.SwabID}}</a> / {{this.Plant}}</td>
+<td><input tabindex="2" type="date" style="width: 100%" id="{{this.SwabID}}DateTested" name="{{this.SwabID}}DateTested" value="{{this.DateTested}}" class="form-control mb-2"></td>
+<td><input tabindex="4" type="number" style="width: 100%" id="ApcResults" name="{{this.SwabID}}ApcResults" value="{{this.ApcResults}}" class="form-control mb-2"></td>
+<td><input tabindex="5" type="number" id="{{this.SwabID}}ColiformResults" name="{{this.SwabID}}ColiformResults" value="{{this.ColiformResults}}" class="form-control mb-2" onchange="setEcoliToZero({{this.SwabID}})"></td>
+<td><input tabindex="6" type="number" style="width: 100%" id="{{this.SwabID}}EcoliResults" name="{{this.SwabID}}EcoliResults" value="{{this.EcoliResults}}" class="form-control mb-2"></td>
+<td><input tabindex="7" type="number" style="width: 100%" id="YeastResults" name="{{this.SwabID}}YeastResults" value="{{this.YeastResults}}" class="form-control mb-2"></td>
+<td><input tabindex="8" type="number" id="MoldResults" name="{{this.SwabID}}MoldResults" value="{{this.MoldResults}}" class="form-control mb-2"></td>
+<td><input tabindex="9" type="number" id="LacticAcidResults" name="{{this.SwabID}}LacticAcidResults" value="{{this.LacticAcidResults}}" class="form-control mb-2"></td>
+</tr> </tbody>
+		
+{{/each}}
+		
+</table>
+	</div>
+	
+		<script>document.getElementById("html-content").addEventListener("scroll", function(){
+   let translate = "translate(0,"+this.scrollTop+"px)";
+   this.querySelector("thead").style.transform = translate;
+});</script>
+	<style>#html-content {
+    overflow: auto;
+    height: 400px;
+}
+		
+		thead {background-color: #444543;}
+		th {color:white}
+	
+	</style>
+{{/if}}
+{{/if}}
+	
+
+<!-- This is from ENVIRONMENTAL_SWABS table -->
+{{#if results}}
+{{#if environmental}}
+<form method="POST">
+<h2>{{results.length}} records found in Environmental Swabs table.</h2>
+		<div id="html-content">
+	<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Sample#/Plant</th>
+      <th scope="col">Date Collected</th>
+      <th scope="col">Time</th>
+      <th scope="col">SampleType</th>
+      <th scope="col">SiteID</th>
+      <th scope="col">Loc.Description</th>      
+	  <th scope="col">Listeria</th>
+      <th scope="col">Salmonella</th>
+      <th scope="col">Comment</th>
+    </tr>
+  </thead>
+
+<input type="text" id="table" name="table" value="environmental" hidden>
+<input type="text" id="isReady" name="isReady" class="form-control mb-2" value="1" hidden>
+
+				{{#each results}}
+	  <tbody>
+    <tr>
+<td><a href="updater?table=environmental&sampID={{this.EnvironmentalSwabID}}">{{this.EnvironmentalSwabID}}</a> / {{this.Plant}}</td>
+<td><input  tabindex="3" type="date" style="width: 90%" name="{{this.EnvironmentalSwabID}}DateCollected" value="{{this.DateCollected}}" class="form-control mb-2"></td>
+<td><input  tabindex="4" type="text" style="width: 100%" name="{{this.EnvironmentalSwabID}}TimeCollected" value="{{this.TimeCollected}}" class="form-control mb-2"></td>
+<td><input  tabindex="5" type="text" style="width: 100%"  name="{{this.EnvironmentalSwabID}}Type" value="{{this.Type}}" class="form-control mb-2"></td>
+<td><input  tabindex="6" type="text" style="width: 100%"  name="{{this.EnvironmentalSwabID}}SiteIdNumber" value="{{this.SiteIdNumber}}" class="form-control mb-2"></td>
+<td><input  tabindex="7" type="text" style="width: 90%" name="{{this.EnvironmentalSwabID}}LocationDescription" value="{{this.LocationDescription}}" class="form-control mb-2"></td>
+<td><input  tabindex="8" type="text" style="width: 90%" name="{{this.EnvironmentalSwabID}}ListeriaResult" value="{{this.ListeriaResult}}" class="form-control mb-2"></td>
+<td><input  tabindex="9" type="text" style="width: 90%" name="{{this.EnvironmentalSwabID}}SalmonellaResult" value="{{this.SalmonellaResult}}" class="form-control mb-2"></td>
+<td><textarea tabindex="10" name="{{this.EnvironmentalSwabID}}Comment" rows="2" cols="8">{{this.Comment}}</textarea></td>
+    </tr>
+  </tbody>
+
+{{/each}}
+	</table>
+	</div>
+			<script>document.getElementById("html-content").addEventListener("scroll", function(){
+   var translate = "translate(0,"+this.scrollTop+"px)";
+   this.querySelector("thead").style.transform = translate;
+});</script>
+	<style>#html-content {
+    overflow: auto;
+    height: 400px;
+}
+		
+		thead {background-color: #444543;}
+		th {color:white}
+	
+	</style>
+{{/if}}
+{{/if}}
+	
+	{{#if results}}
+</form>
+{{/if}}
