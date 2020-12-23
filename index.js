@@ -1,6 +1,6 @@
 'use strict'
 
-// required modules
+// required local modules
 let querySql = require("./lib/sql.js")
 let update = require("./lib/updater.js")
 let search = require("./lib/search.js")
@@ -8,20 +8,19 @@ let create = require("./lib/create.js")
 let upload = require("./lib/upload.js")
 let queries = require("./lib/queries.js")
 
-// required modules
+// required external modules
 const express = require("express")
 const app = express()
 const nodeSSPI = require('node-sspi')
 
-app.set('port', process.env.PORT || 3000)
+app.set('port', process.env.PORT || 3000) // set port number
 app.use(express.static(__dirname + '/views')) // allows direct navigation to static files
 app.use(require("body-parser").urlencoded({limit: "50mb", extended: true, parameterLimit:50000}))
 
-// requiring express-handlebars module and making Handlebars the template engine
 let handlebars =  require("express-handlebars")
 	.create({ defaultLayout: "main"})
 app.engine("handlebars", handlebars.engine)
-app.set("view engine", "handlebars")
+app.set("view engine", "handlebars") // requiring Express-handlebars as well as setting handlebars as the template engine
 
 // windows authentication with node-sspi module
 app.use(function (req, res, next) {
@@ -51,13 +50,13 @@ let currentUser = (user) => { // function for setting and getting current user
 // queries page
 app.get('/queries', function(req,res) {
 	currentUser(req.connection.user)
-	queries.queryAndSpreadsheetCreator(req, res)
+	queries.queryAndSpreadsheetCreator(req, res) // query logic and functionality
 })
 
 // update page
 app.use('/updater', function(req,res) {
 	currentUser(req.connection.user)
-	update.updaterSql(res,req)
+	update.updaterSql(res,req) // update logic and functionality
 })
 
 // upload page
@@ -66,7 +65,7 @@ app.use('/upload', function(req, res) {
 	upload.uploadLogic(req, function (samp, swab, environment){ //logic for uploading spreadsheets
 		samples = samp, swabs = swab, environmental = environment
 	})
-	upload.bulkInsert(req, res, samples, swabs, environmental)
+	upload.bulkInsert(req, res, samples, swabs, environmental) // logic and functionality for upload spreadsheets to DB
 })
 
 // failure page
@@ -90,27 +89,27 @@ app.get('/no_records', function(req, res) {
 // success page
 app.use('/create', function(req, res) {
 	currentUser(req.connection.user)
-	create.createLogic(req, function (samp, swab, environment){
+	create.createLogic(req, function (samp, swab, environment){ // logic and functionality for record creation
 		samples = samp, swabs = swab, environmental = environment
 	})
-	if(req.method === 'POST'){
+	if(req.method === 'POST'){ // if post request, then take values and insert them into database
 		create.createInsert(req, res, function (result){
 			return result
 		})
 	} else {
-		create.userPreferences(req, res, samples, swabs, environmental)
+		create.userPreferences(req, res, samples, swabs, environmental) // saved preferences for user
 	}
 })
 
 // search page
 app.use('/', function(req, res) {
 	currentUser(req.connection.user)
-	if (req.method === 'GET') { // logic for mass updating records
+	if (req.method === 'GET') { // if get request, then pull pertinent data from database
 		search.massUpdateLogic(res,req, function (result){
 			return result
 		})
 	}
-	if(req.method === 'POST'){ // async function for updating mass records
+	if(req.method === 'POST'){ // if post request, then run async function that updates a mass of records
 		search.updateSqlRecords(req.query.table, req, res, result.recordset).then(value => console.log('Successful request.'), error => {console.log('Request has failed.')})
 	}
 })
@@ -121,6 +120,7 @@ app.use(function(req,res) {
 	res.render('404', {title: "404"})
 })
 
+// app event listener
 app.listen(app.get('port'), function() {
 	console.log('Node app has started at ' + new Date().toLocaleString() + ".")
 })
