@@ -41,8 +41,6 @@ querySql.sqlQuery("SELECT Item, REPLACE(ItemDescription, '#', 'No.') as ItemDesc
 
 app.locals.currentYear = new Date().getFullYear() // global variable
 
-let samples = false, swabs = false, environmental = false //declare variables
-
 let currentUser = (user) => { // function for setting and getting current user
 	app.locals.currentUser = (user).replace(/JVAPP\\/g, "").toLowerCase().replace(/resers\\/g, "")
 }
@@ -62,10 +60,9 @@ app.use('/updater', function(req,res) {
 // upload page
 app.use('/upload', function(req, res) {
 	currentUser(req.connection.user)
-	upload.uploadLogic(req, function (samp, swab, environment){ //logic for uploading spreadsheets
-		samples = samp, swabs = swab, environmental = environment
+	upload.uploadLogic(req, function (samples, swabs, environmental){ //logic for uploading spreadsheets
+		upload.bulkInsert(req, res, samples, swabs, environmental) // logic and functionality for upload spreadsheets to DB
 	})
-	upload.bulkInsert(req, res, samples, swabs, environmental) // logic and functionality for upload spreadsheets to DB
 })
 
 // failure page
@@ -89,25 +86,20 @@ app.get('/no_records', function(req, res) {
 // success page
 app.use('/create', function(req, res) {
 	currentUser(req.connection.user)
-	create.createLogic(req, function (samp, swab, environment){ // logic and functionality for record creation
-		samples = samp, swabs = swab, environmental = environment
+	create.createLogic(req, function (samples, swabs, environmental){ // logic and functionality for record creation
+		if(req.method === 'POST'){ // if post request, then take values and insert them into database
+			create.createInsert(req, res)
+		} else {
+			create.userPreferences(req, res, samples, swabs, environmental) // saved preferences for user
+		}
 	})
-	if(req.method === 'POST'){ // if post request, then take values and insert them into database
-		create.createInsert(req, res, function (result){
-			return result
-		})
-	} else {
-		create.userPreferences(req, res, samples, swabs, environmental) // saved preferences for user
-	}
 })
 
 // search page
 app.use('/', function(req, res) {
 	currentUser(req.connection.user)
 	if (req.method === 'GET') { // if get request, then pull pertinent data from database
-		search.massUpdateLogic(res,req, function (result){
-			return result
-		})
+		search.massUpdateLogic(res,req)
 	}
 	if(req.method === 'POST'){ // if post request, then run async function that updates a mass of records
 		search.updateSqlRecords(req.query.table, req, res, result.recordset).then(value => console.log('Successful request.'), error => {console.log('Request has failed.')})

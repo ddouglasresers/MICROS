@@ -1,5 +1,5 @@
 {{#unless table}}
-	   <center>
+	   <div style="text-align: center;">
       <div class="col-lg-63 mb-3">
          <div class="card">
             <h5 class="card-header">Choose the database table that you will be creating a record in</h5>
@@ -13,7 +13,7 @@
             </div>
          </div>
       </div>
-   </center>
+   </div>
 {{/unless}}
 
 
@@ -39,8 +39,8 @@
 
 <tbody>
     <tr>
-		
-<td><input type="date" name="DateTested" id="DateTested" value="" class="btn btn-dark" style="width:90%;"></td>			
+
+<td><input type="date" name="DateTested" id="DateTested" value="" class="btn btn-dark" style="width:90%;"></td>
 		
 		<td>	
 <select name="Plant" id="Plant" class="btn btn-dark dropdown-toggle" onchange="changeEcoliValue()">
@@ -108,9 +108,9 @@
 <tbody>
     <tr>
 						
-<td><textarea name="Comments" value="" class="btn btn-dark" rows="10" cols="70"></textarea></td>
+<td><textarea name="Comments" class="btn btn-dark" rows="10" cols="70"></textarea></td>
 		
-<td><select name="FoodContactStatus" class="btn btn-dark dropdown-toggle">
+<td><select name="FoodContactStatus" id="FoodContactStatus" class="btn btn-dark dropdown-toggle">
 	<option value="FALSE">FALSE</option>
 		<option value="TRUE">TRUE</option>
 		<option value="">N/A</option>
@@ -243,7 +243,7 @@ document.getElementById('DateTested').value =  new Date().toISOString().slice(0,
 <tbody>
     <tr>
 						
-<td><textarea name="Comments" value="" class="btn btn-dark" rows="10" cols="70"></textarea></td>
+<td><textarea name="Comments" class="btn btn-dark" rows="10" cols="70"></textarea></td>
 		
 <td><select name="IsCulturedIngredient" class="btn btn-dark dropdown-toggle">
 	<option value="FALSE">FALSE</option>
@@ -300,8 +300,7 @@ document.getElementById('DateTested').value =  new Date().toISOString().slice(0,
 			
 		
 <td>
-<select name="SiteIdNumber" id="SiteIdNumber" class="btn btn-dark dropdown-toggle" onchange="
-siteIdNumChange()">>
+<select name="SiteIdNumber" id="SiteIdNumber" class="btn btn-dark dropdown-toggle" onchange="siteIdNumChange()">
 	  <option value="{{#if siteNumber}}{{siteNumber}}{{/if}}">{{#if siteNumber}}{{siteNumber}}{{/if}}</option>
 	{{#each siteDescriptions}}
   <option value="{{this.SiteDescription}}&siteNumber={{this.SiteNumber}}">{{this.SiteNumber}}</option>
@@ -351,7 +350,7 @@ siteIdNumChange()">>
 <tbody>
     <tr>	
 
-	<td><textarea name="Comment" value="" class="btn btn-dark" rows="10" cols="60"></textarea></td>
+	<td><textarea name="Comment" class="btn btn-dark" rows="10" cols="60"></textarea></td>
 		
 		<td><textarea name="LocationDescription" id="LocationDescription" class="btn btn-dark" rows="5">{{#if plantTenIsTrue}}{{#if siteDescription}}{{siteDescription}}{{/if}}{{/if}} </textarea></td>
 				
@@ -365,6 +364,7 @@ siteIdNumChange()">>
 	{{#unless dateCollected}}
 	document.getElementById('DateCollected').value =  new Date().toISOString().slice(0,10);
 	{{/unless}}
+
 function siteIdNumChange() {
     if (document.getElementById('Plant').value == '10') {
         document.location.href = 'create?table=environmental&siteDescription=' + document.getElementById('SiteIdNumber').value + '&plant=' + document.getElementById('Plant').value + '&timeCollected=' + document.getElementById('TimeCollected').value + '&sampleType=' + document.getElementById('Type').value + '&currentDate=' + document.getElementById('DateCollected').value;
