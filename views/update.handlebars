@@ -1,158 +1,109 @@
 <form>
-	<h2>Lab Sample # {{results.LabSampleNumber}}</h2>
-<div class="card">
-  <h5 class="card-header">Update record in {{table}} {{#if environmental}}swabs{{/if}} table</h5>
-  <div class="card-body">
-	 <input type="text" name="table" class="form-control mb-2" value="{{table}}" hidden> 
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  {{#if environmental}}
-	                 <div class="form-group mb-4">
-                  <div style="float:left; width: 33%">
-                     Date Collected: <input type="date" id="DateCollected" name="DateCollected" value="{{results.DateCollected}}" class="form-control mb-2">
-                  </div>
-                  <div style="float:left; width: 33%">
-                     Time Collected: <input type="text" id="TimeCollected" name="TimeCollected" value="{{results.TimeCollected}}" class="form-control mb-2">
-                  </div>    
-						 <div style="float:left; width: 33%">
-                     Plant: <input type="text" id="Plant" name="Plant" value="{{results.Plant}}" class="form-control mb-2">
-                  </div>
-               </div>
-	  
-	  <div class="form-group mb-4">
-                  <div style="float:left; width: 23%">
-                     Site ID Number: <input type="text" id="SiteIdNumber" name="SiteIdNumber" value="{{results.SiteIdNumber}}" class="form-control mb-2">
-                  </div>    
-						 <div style="float:left; width: 23%">
-                    Type: <input type="text" id="Type" name="Type" value="{{results.Type}}" class="form-control mb-2">
-                  </div>						 
-						   <div style="float:left; width: 23%">
-                     Listeria Result: <input type="text" id="ListeriaResult" name="ListeriaResult" value="{{results.ListeriaResult}}" class="form-control mb-2">
-                  </div>						 
-						   <div style="float:left; width: 23%">
-                     Salmonella Result: <input type="text" id="SalmonellaResult" name="SalmonellaResult" value="{{results.SalmonellaResult}}" class="form-control mb-2">
-                  </div>
-	</div>
-						  <div class="form-group mb-4">
-
-		  <div style="float:left; width: 100%">
-                    Location Description: <input type="text" id="LocationDescription" name="LocationDescription" value="{{results.LocationDescription}}" class="form-control mb-2">  
-               </div>
-	  </div>
-	  {{/if}}
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  {{#if samples}}
-                  
-<input type="date" id="DateTested" name="DateTested" value="{{results.DateTested}}" class="form-control mb-2">
-<input type="text" id="ItemNumber" name="ItemNumber" value="{{results.ItemNumber}}" class="form-control mb-2">
-<input type="text" id="Plant" name="Plant" value="{{results.Plant}}" class="form-control mb-2">
-<input type="text" id="IsCulturedIngredient" name="IsCulturedIngredient" value="{{results.IsCulturedIngredient}}" class="form-control mb-2">
-<input type="date" id="UseByDate" name="UseByDate" value="{{results.UseByDate}}" class="form-control mb-2">
-<input type="date" id="ManufactureDate" name="ManufactureDate" value="{{results.ManufactureDate}}" class="form-control mb-2">
-<input type="text" id="ManufactureTime" name="ManufactureTime" value="{{results.ManufactureTime}}" class="form-control mb-2">
-<input type="text" id="Type" name="Type" value="{{results.Type}}" class="form-control mb-2">
-<input type="text" id="Line" name="Line" value="{{results.Line}}" class="form-control mb-2">
-<input type="text" id="ApcResults" name="ApcResults" value="{{results.ApcResults}}" class="form-control mb-2">
-<input type="text" id="ColiformResults" name="ColiformResults" value="{{results.ColiformResults}}" class="form-control mb-2">
-<input type="text" id="EcoliResults" name="EcoliResults" value="{{results.EcoliResults}}" class="form-control mb-2">
-<input type="text" id="YeastResults" name="YeastResults" value="{{results.YeastResults}}" class="form-control mb-2">
-<input type="text" id="MoldResults" name="MoldResults" value="{{results.MoldResults}}" class="form-control mb-2">
-<input type="text" id="LacticAcidResults" name="LacticAcidResults" value="{{results.LacticAcidResults}}" class="form-control mb-2">
-<input type="text" id="Comments" name="Comments" value="{{results.Comments}}" class="form-control mb-2">
-<input type="text" id="Description" name="Description" value="{{results.Description}}" class="form-control mb-2">
-
-	  {{/if}}
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  	  {{#if swabs}}
-	                 <div class="form-group mb-4">
-                  <div style="float:left; width: 33%">
-                     Date Tested: <input type="date" id="DateTested" name="DateTested" value="{{results.DateTested}}" class="form-control mb-2">
-                  </div>
-                  <div style="float:left; width: 33%">
-                     Date Collected: <input type="date" id="DateCollected" name="DateCollected" value="{{results.DateCollected}}" class="form-control mb-2">
-                  </div>    
-						 <div style="float:left; width: 33%">
-                     Plant: <input type="text" id="Plant" name="Plant" value="{{results.Plant}}" class="form-control mb-2">
-                  </div>
-               </div>
-	  
-	  <div class="form-group mb-4">
-                  <div style="float:left; width: 33%">
-                     Food Contact Status: <input type="text" id="FoodContactStatus" name="FoodContactStatus" value="{{results.FoodContactStatus}}" class="form-control mb-2">
-                  </div>    						 
-						   <div style="float:left; width: 33%">
-                     Apc Results: <input type="text" id="ApcResults" name="ApcResults" value="{{results.ApcResults}}" class="form-control mb-2">
-                  </div>						 
-						   <div style="float:left; width: 33%">
-                      Coliform Results: <input type="text" id="ColiformResults" name="ColiformResults" value="{{results.ColiformResults}}" class="form-control mb-2">
-                  </div>
-	</div>
-	  
-	  
-	  <div class="form-group mb-4">
-                  <div style="float:left; width: 23%">
-                     E. coli Results: <input type="text" id="EcoliResults" name="EcoliResults" value="{{results.EcoliResults}}" class="form-control mb-2">
-                  </div>    
-						 <div style="float:left; width: 23%">
-                    Yeast Results: <input type="text" id="YeastResults" name="YeastResults" value="{{results.YeastResults}}" class="form-control mb-2">
-                  </div>						 
-						   <div style="float:left; width: 23%">
-                     Apc Results: <input type="text" id="MoldResults" name="MoldResults" value="{{results.MoldResults}}" class="form-control mb-2">
-                  </div>						 
-						   <div style="float:left; width: 23%">
-                      Lactic Acid Results: <input type="text" id="LacticAcidResults" name="LacticAcidResults" value="{{results.LacticAcidResults}}" class="form-control mb-2">
-                  </div>
-	</div>
-	  
-	  
-	  	          <div class="form-group mb-4">
-                  <div style="float:left; width: 50%">
-                     Comments: <input type="text" id="Comments" name="Comments" value="{{results.Comments}}" class="form-control mb-2">
-                  </div>          
-					  <div style="float:left; width: 50%">
-                     Description: <input type="text" id="Description" name="Description" value="{{results.Description}}" class="form-control mb-2">
-                  </div>
-	  </div>
-
-	  {{/if}}
-	
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  </div>
-  </div>
-<br>	  <button type="submit" class="btn btn-primary btn-lg">Update Record Now</button>
-	</form>
+    <h2>Lab Sample # {{results.LabSampleNumber}}</h2>
+    <div class="card">
+        <h5 class="card-header">Update record in {{table}} {{#if environmental}}swabs{{/if}} table</h5>
+        <div class="card-body">
+            <label>
+                <input type="text" name="table" class="form-control mb-2" value="{{table}}" hidden>
+            </label>
+            {{#if environmental}}
+                <div class="form-group mb-4">
+                    <div style="float:left; width: 33%">
+                        Date Collected: <input type="date" id="DateCollected" name="DateCollected" value="{{results.DateCollected}}" class="form-control mb-2">
+                    </div>
+                    <div style="float:left; width: 33%">
+                        Time Collected: <input type="text" id="TimeCollected" name="TimeCollected" value="{{results.TimeCollected}}" class="form-control mb-2">
+                    </div>
+                    <div style="float:left; width: 33%">
+                        Plant: <input type="text" id="Plant" name="Plant" value="{{results.Plant}}" class="form-control mb-2">
+                    </div>
+                </div>
+                <div class="form-group mb-4">
+                    <div style="float:left; width: 23%">
+                        Site ID Number: <input type="text" id="SiteIdNumber" name="SiteIdNumber" value="{{results.SiteIdNumber}}" class="form-control mb-2">
+                    </div>
+                    <div style="float:left; width: 23%">
+                        Type: <input type="text" id="Type" name="Type" value="{{results.Type}}" class="form-control mb-2">
+                    </div>
+                    <div style="float:left; width: 23%">
+                        Listeria Result: <input type="text" id="ListeriaResult" name="ListeriaResult" value="{{results.ListeriaResult}}" class="form-control mb-2">
+                    </div>
+                    <div style="float:left; width: 23%">
+                        Salmonella Result: <input type="text" id="SalmonellaResult" name="SalmonellaResult" value="{{results.SalmonellaResult}}" class="form-control mb-2">
+                    </div>
+                </div>
+                <div class="form-group mb-4">
+                    <div style="float:left; width: 100%">
+                        Location Description: <input type="text" id="LocationDescription" name="LocationDescription" value="{{results.LocationDescription}}" class="form-control mb-2">
+                    </div>
+                </div>
+            {{/if}}
+            {{#if samples}}
+                <input type="date" id="DateTested" name="DateTested" value="{{results.DateTested}}" class="form-control mb-2">
+                <input type="text" id="ItemNumber" name="ItemNumber" value="{{results.ItemNumber}}" class="form-control mb-2">
+                <input type="text" id="Plant" name="Plant" value="{{results.Plant}}" class="form-control mb-2">
+                <input type="text" id="IsCulturedIngredient" name="IsCulturedIngredient" value="{{results.IsCulturedIngredient}}" class="form-control mb-2">
+                <input type="date" id="UseByDate" name="UseByDate" value="{{results.UseByDate}}" class="form-control mb-2">
+                <input type="date" id="ManufactureDate" name="ManufactureDate" value="{{results.ManufactureDate}}" class="form-control mb-2">
+                <input type="text" id="ManufactureTime" name="ManufactureTime" value="{{results.ManufactureTime}}" class="form-control mb-2">
+                <input type="text" id="Type" name="Type" value="{{results.Type}}" class="form-control mb-2">
+                <input type="text" id="Line" name="Line" value="{{results.Line}}" class="form-control mb-2">
+                <input type="text" id="ApcResults" name="ApcResults" value="{{results.ApcResults}}" class="form-control mb-2">
+                <input type="text" id="ColiformResults" name="ColiformResults" value="{{results.ColiformResults}}" class="form-control mb-2">
+                <input type="text" id="EcoliResults" name="EcoliResults" value="{{results.EcoliResults}}" class="form-control mb-2">
+                <input type="text" id="YeastResults" name="YeastResults" value="{{results.YeastResults}}" class="form-control mb-2">
+                <input type="text" id="MoldResults" name="MoldResults" value="{{results.MoldResults}}" class="form-control mb-2">
+                <input type="text" id="LacticAcidResults" name="LacticAcidResults" value="{{results.LacticAcidResults}}" class="form-control mb-2">
+                <input type="text" id="Comments" name="Comments" value="{{results.Comments}}" class="form-control mb-2">
+                <input type="text" id="Description" name="Description" value="{{results.Description}}" class="form-control mb-2">
+            {{/if}}
+            {{#if swabs}}
+                <div class="form-group mb-4">
+                    <div style="float:left; width: 33%">
+                        Date Tested: <input type="date" id="DateTested" name="DateTested" value="{{results.DateTested}}" class="form-control mb-2">
+                    </div>
+                    <div style="float:left; width: 33%">
+                        Date Collected: <input type="date" id="DateCollected" name="DateCollected" value="{{results.DateCollected}}" class="form-control mb-2">
+                    </div>
+                    <div style="float:left; width: 33%">
+                        Plant: <input type="text" id="Plant" name="Plant" value="{{results.Plant}}" class="form-control mb-2">
+                    </div>
+                </div>
+                <div class="form-group mb-4">
+                    <div style="float:left; width: 33%">
+                        Food Contact Status: <input type="text" id="FoodContactStatus" name="FoodContactStatus" value="{{results.FoodContactStatus}}" class="form-control mb-2">
+                    </div>
+                    <div style="float:left; width: 33%">
+                        Apc Results: <input type="text" id="ApcResults" name="ApcResults" value="{{results.ApcResults}}" class="form-control mb-2">
+                    </div>
+                    <div style="float:left; width: 33%">
+                        Coliform Results: <input type="text" id="ColiformResults" name="ColiformResults" value="{{results.ColiformResults}}" class="form-control mb-2">
+                    </div>
+                </div>
+                <div class="form-group mb-4">
+                    <div style="float:left; width: 23%">
+                        E. coli Results: <input type="text" id="EcoliResults" name="EcoliResults" value="{{results.EcoliResults}}" class="form-control mb-2">
+                    </div>
+                    <div style="float:left; width: 23%">
+                        Yeast Results: <input type="text" id="YeastResults" name="YeastResults" value="{{results.YeastResults}}" class="form-control mb-2">
+                    </div>
+                    <div style="float:left; width: 23%">
+                        Apc Results: <input type="text" id="MoldResults" name="MoldResults" value="{{results.MoldResults}}" class="form-control mb-2">
+                    </div>
+                    <div style="float:left; width: 23%">
+                        Lactic Acid Results: <input type="text" id="LacticAcidResults" name="LacticAcidResults" value="{{results.LacticAcidResults}}" class="form-control mb-2">
+                    </div>
+                </div>
+                <div class="form-group mb-4">
+                    <div style="float:left; width: 50%">
+                        Comments: <input type="text" id="Comments" name="Comments" value="{{results.Comments}}" class="form-control mb-2">
+                    </div>
+                    <div style="float:left; width: 50%">
+                        Description: <input type="text" id="Description" name="Description" value="{{results.Description}}" class="form-control mb-2">
+                    </div>
+                </div>
+            {{/if}}
+        </div>
+    </div>
+    <br>	  <button type="submit" class="btn btn-primary btn-lg">Update Record Now</button>
+</form>

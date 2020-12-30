@@ -1,395 +1,294 @@
-	{{#if table}}
-<h3>Database Table: {{#if environmental}}Environmental Swabs{{/if}}{{#if samples}}Samples{{/if}}{{#if swabs}}Swabs{{/if}} {{#if sampleNumber}}| Sample #: {{sampleNumber}}{{/if}}</h3>
-<form method="POST">
-	
-		<!-- This is from SWABS table -->
-{{#if swabs}}
-	<table class="table table-hover">
-  <thead>
-    <tr>
-	  <th scope="col">DateTested</th>
-      <th scope="col">Plant</th>
-      <th scope="col">DateCollected</th>
-      <th scope="col">TimeCollected</th>
-      <th scope="col">Type</th>
-	  <th scope="col">Description</th>
-    </tr>
-  </thead>
-
-<input type="text" id="table" name="table" value="swabs" hidden>
-<input type="text" id="sampID" name="sampID" value="{{#if queryResult.SwabID}}{{queryResult.SwabID}}{{/if}}" hidden>
-
-
-<tbody>
-    <tr>
-		
-<td><input type="date" name="DateTested" id="DateTested" value="{{#if queryResult.DateTested}}{{queryResult.DateTested}}{{/if}}" class="btn btn-dark" style="width:90%;"></td>			
-		
-		<td>	
-<select name="Plant" id="Plant" class="btn btn-dark dropdown-toggle" onchange="changeEcoliValue()">
-	 <option value="{{#if queryResult.Plant}}{{queryResult.Plant}}{{/if}}">{{#if queryResult.Plant}}{{queryResult.Plant}}{{/if}}</option>
-	{{#each plants}}
-  <option value="{{this.Plant}}">{{this.Plant}}</option>
-	{{/each}}
-</select>
-</td>
-
-<td><input type="date" name="DateCollected"  value="{{#if queryResult.DateCollected}}{{queryResult.DateCollected}}{{/if}}" class="btn btn-dark" style="width:90%;"></td>	
-		
-<td><input type="text" name="TimeCollected" value="{{#if queryResult.TimeCollected}}{{queryResult.TimeCollected}}{{/if}}" class="btn btn-dark"></td>
-
-<td>
-<select name="Type" class="btn btn-dark dropdown-toggle">
-	<option value="{{#if queryResult.Type}}{{queryResult.Type}}{{else}}{{savedSampleType}}{{/if}}">{{#if queryResult.Type}}{{queryResult.Type}}{{else}}{{savedSampleType}}{{/if}}</option>
-	{{#each types}}
-  <option value="{{this.Type}}">{{this.Type}}</option>
-	{{/each}}
-</select>
-</td>		
-<td><input type="text" name="Description" id="Description" value="{{#if queryResult.Description}}{{queryResult.Description}}{{/if}}" class="btn btn-dark"></td>
-    </tr>
- </tbody>
-		</table>
-	
-	<table  class="table table-hover">
-	 <thead>
-    <tr>
-      <th scope="col">APC</th>
-      <th scope="col">Coliform</th>
-      <th scope="col">Ecoli</th>
-      <th scope="col">Yeast</th>
-      <th scope="col">Mold</th>
-	<th scope="col">LacticAcid</th>
-		 </tr>
-  </thead>
-	
-<tbody>
-    <tr>			
-<td><input type="number" name="ApcResults" class="btn btn-dark" style="width:75%;" value="{{#if queryResult.ApcResults}}{{queryResult.ApcResults}}{{/if}}"></td>
-		
-<td><input type="number" name="ColiformResults" id="ColiformResults" class="btn btn-dark" style="width:75%;" value="{{#if queryResult.ColiformResults}}{{queryResult.ColiformResults}}{{/if}}"></td>
-		
-<td><input type="number" name="EcoliResults" id="EcoliResults" class="btn btn-dark" style="width:75%;" value="{{#if queryResult.EcoliResults}}{{queryResult.EcoliResults}}{{/if}}"></td>
-		
-<td><input type="number" name="YeastResults" class="btn btn-dark" style="width:75%;" value="{{#if queryResult.YeastResults}}{{queryResult.YeastResults}}{{/if}}"></td>
-		
-<td><input type="number" name="MoldResults" class="btn btn-dark" style="width:75%;" value="{{#if queryResult.MoldResults}}{{queryResult.MoldResults}}{{/if}}"></td>
-
-<td><input type="number" name="LacticAcidResults" class="btn btn-dark" style="width:75%;" value="{{#if queryResult.LacticAcidResults}}{{queryResult.LacticAcidResults}}{{/if}}"></td>
-	</tr>
-		</tbody>
-	</table>
-	
-<table  class="table table-hover">
-	<thead>
-    <tr>
-      <th scope="col">Comments</th>
-      <th scope="col">Food Contact Status</th>
-    </tr>
-  </thead>
-	
-<tbody>
-    <tr>
-						
-<td><textarea name="Comments" class="btn btn-dark" rows="10" cols="70">{{#if queryResult.Comments}}{{queryResult.Comments}}{{/if}}</textarea></td>
-		
-<td><select name="FoodContactStatus" id="FoodContactStatus" class="btn btn-dark dropdown-toggle">
-    <option value="{{queryResult.FoodContactStatus}}">{{queryResult.FoodContactStatus}}</option>
-	<option value="FALSE">FALSE</option>
-		<option value="TRUE">TRUE</option>
-		<option value="">N/A</option>
-</select><td>
-	</tr>
-		</tbody>
-	</table>
-<script>
-	document.getElementById('FoodContactStatus').value =  (document.getElementById('FoodContactStatus').value).toUpperCase();
-	</script>
+{{#if table}}
+    <h3>Database Table: {{#if environmental}}Environmental Swabs{{/if}}{{#if samples}}Samples{{/if}}{{#if swabs}}Swabs{{/if}} {{#if sampleNumber}}| Sample #: {{sampleNumber}}{{/if}}</h3>
+    <form method="POST">
+        <!-- This is from SWABS table -->
+        {{#if swabs}}
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">DateTested</th>
+                    <th scope="col">Plant</th>
+                    <th scope="col">DateCollected</th>
+                    <th scope="col">TimeCollected</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Description</th>
+                </tr>
+                </thead>
+                <input type="text" id="table" name="table" value="swabs" hidden>
+                <input type="text" id="sampID" name="sampID" value="{{#if queryResult.SwabID}}{{queryResult.SwabID}}{{/if}}" hidden>
+                <tbody>
+                <tr>
+                    <td><input type="date" name="DateTested" id="DateTested" value="{{#if queryResult.DateTested}}{{queryResult.DateTested}}{{/if}}" class="btn btn-dark" style="width:90%;"></td>
+                    <td>
+                        <select name="Plant" id="Plant" class="btn btn-dark dropdown-toggle" onchange="changeEcoliValue()">
+                            <option value="{{#if queryResult.Plant}}{{queryResult.Plant}}{{/if}}">{{#if queryResult.Plant}}{{queryResult.Plant}}{{/if}}</option>
+                            {{#each plants}}
+                                <option value="{{this.Plant}}">{{this.Plant}}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td><input type="date" name="DateCollected"  value="{{#if queryResult.DateCollected}}{{queryResult.DateCollected}}{{/if}}" class="btn btn-dark" style="width:90%;"></td>
+                    <td><input type="text" name="TimeCollected" value="{{#if queryResult.TimeCollected}}{{queryResult.TimeCollected}}{{/if}}" class="btn btn-dark"></td>
+                    <td>
+                        <select name="Type" class="btn btn-dark dropdown-toggle">
+                            <option value="{{#if queryResult.Type}}{{queryResult.Type}}{{else}}{{savedSampleType}}{{/if}}">{{#if queryResult.Type}}{{queryResult.Type}}{{else}}{{savedSampleType}}{{/if}}</option>
+                            {{#each types}}
+                                <option value="{{this.Type}}">{{this.Type}}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td><input type="text" name="Description" id="Description" value="{{#if queryResult.Description}}{{queryResult.Description}}{{/if}}" class="btn btn-dark"></td>
+                </tr>
+                </tbody>
+            </table>
+            <table  class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">APC</th>
+                    <th scope="col">Coliform</th>
+                    <th scope="col">Ecoli</th>
+                    <th scope="col">Yeast</th>
+                    <th scope="col">Mold</th>
+                    <th scope="col">LacticAcid</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input type="number" name="ApcResults" class="btn btn-dark" style="width:75%;" value="{{#if queryResult.ApcResults}}{{queryResult.ApcResults}}{{/if}}"></td>
+                    <td><input type="number" name="ColiformResults" id="ColiformResults" class="btn btn-dark" style="width:75%;" value="{{#if queryResult.ColiformResults}}{{queryResult.ColiformResults}}{{/if}}"></td>
+                    <td><input type="number" name="EcoliResults" id="EcoliResults" class="btn btn-dark" style="width:75%;" value="{{#if queryResult.EcoliResults}}{{queryResult.EcoliResults}}{{/if}}"></td>
+                    <td><input type="number" name="YeastResults" class="btn btn-dark" style="width:75%;" value="{{#if queryResult.YeastResults}}{{queryResult.YeastResults}}{{/if}}"></td>
+                    <td><input type="number" name="MoldResults" class="btn btn-dark" style="width:75%;" value="{{#if queryResult.MoldResults}}{{queryResult.MoldResults}}{{/if}}"></td>
+                    <td><input type="number" name="LacticAcidResults" class="btn btn-dark" style="width:75%;" value="{{#if queryResult.LacticAcidResults}}{{queryResult.LacticAcidResults}}{{/if}}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <table  class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Comments</th>
+                    <th scope="col">Food Contact Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><textarea name="Comments" class="btn btn-dark" rows="10" cols="70">{{#if queryResult.Comments}}{{queryResult.Comments}}{{/if}}</textarea></td>
+                    <td>
+                        <select name="FoodContactStatus" id="FoodContactStatus" class="btn btn-dark dropdown-toggle">
+                            <option value="{{queryResult.FoodContactStatus}}">{{queryResult.FoodContactStatus}}</option>
+                            <option value="FALSE">FALSE</option>
+                            <option value="TRUE">TRUE</option>
+                            <option value="">N/A</option>
+                        </select>
+                    <td>
+                </tr>
+                </tbody>
+            </table>
+            <script>
+                document.getElementById('FoodContactStatus').value =  (document.getElementById('FoodContactStatus').value).toUpperCase();
+            </script>
+        {{/if}}
+        <!-- This is from SAMPLES table -->
+        {{#if samples}}
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">DateTested</th>
+                    <th scope="col">ItemNumber</th>
+                    <th scope="col">Plant</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">UseByDate</th>
+                </tr>
+                </thead>
+                <input type="text" id="table" name="table" value="samples" hidden>
+                <input type="text" id="sampID" name="sampID" value="{{#if queryResult.SampleID}}{{queryResult.SampleID}}{{/if}}" hidden>
+                <tbody>
+                <tr>
+                    <td><input type="date" name="DateTested" id="DateTested" value="{{#if dateTested}}{{dateTested}}{{else}}{{queryResult.DateTested}}{{/if}}" class="btn btn-dark" style="width:90%;"></td>
+                    <td>
+                        <input type="text" name="ItemNumber" id="ItemNumber" class="btn btn-dark dropdown-toggle" onchange="document.location.href='updater?table=samples&ItemNumber=' + document.getElementById('ItemNumber').value + '&itemDescription=' + document.getElementById(document.getElementById('ItemNumber').value).className + '&dateTested=' + document.getElementById('DateTested').value + '&plant=' + document.getElementById('Plant').value + '&sampID=' + {{#if queryResult.SampleID}}{{queryResult.SampleID}}{{/if}}" list="UPCLIST" value="{{#if itemNumber}}{{itemNumber}}{{else}}{{queryResult.ItemNumber}}{{/if}}">
+                        <datalist id="UPCLIST">
+                            {{#each itemInfo}}
+                                <option value="{{this.Item}}" id="{{this.Item}}" class="{{this.ItemDescription}}">{{this.Item}} - {{this.ItemDescription}}</option>
+                            {{/each}}
+                        </datalist>
+                    </td>
+                    <td>
+                        <select name="Plant" id="Plant" class="btn btn-dark dropdown-toggle" onchange="changeEcoliValue()">
+                            <option value="{{#if plant}}{{plant}}{{else}}{{queryResult.Plant}}{{/if}}">{{#if plant}}{{plant}}{{else}}{{queryResult.Plant}}{{/if}}</option>
+                            {{#each plants}}
+                                <option value="{{this.Plant}}">{{this.Plant}}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td><input type="text" name="Description" id="Description" value="{{#if itemDescription}}{{itemDescription}}{{else}}{{queryResult.Description}}{{/if}}" class="btn btn-dark" style="width:100%;"></td>
+                    <td><input type="date" name="UseByDate" id="UseByDate" value="{{#if queryResult.UseByDate}}{{queryResult.UseByDate}}{{/if}}" class="btn btn-dark" style="width:90%;"></td>
+                </tr>
+                </tbody>
+            </table>
+            <table  class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Manuf. Date</th>
+                    <th scope="col">Manuf. Time</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Line</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input type="date" name="ManufactureDate" value="{{#if queryResult.ManufactureDate}}{{queryResult.ManufactureDate}}{{/if}}" class="btn btn-dark"></td>
+                    <td><input type="text" name="ManufactureTime" value="{{#if queryResult.ManufactureTime}}{{queryResult.ManufactureTime}}{{/if}}" class="btn btn-dark"></td>
+                    <td>
+                        <select name="Type" class="btn btn-dark dropdown-toggle">
+                            <option value="{{#if queryResult.Type}}{{queryResult.Type}}{{else}}{{savedSampleType}}{{/if}}">{{#if queryResult.Type}}{{queryResult.Type}}{{else}}{{savedSampleType}}{{/if}}</option>
+                            {{#each types}}
+                                <option value="{{this.Type}}">{{this.Type}}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td><input type="text" name="Line" value="{{#if queryResult.Line}}{{queryResult.Line}}{{/if}}" class="btn btn-dark"></td>
+                </tr>
+                </tbody>
+            </table>
+            <table  class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">APC</th>
+                    <th scope="col">Coliform</th>
+                    <th scope="col">Ecoli</th>
+                    <th scope="col">Yeast</th>
+                    <th scope="col">Mold</th>
+                    <th scope="col">LacticAcid</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input type="number" name="ApcResults" class="btn btn-dark" style="width:75%;" value="{{#if queryResult.ApcResults}}{{queryResult.ApcResults}}{{/if}}"></td>
+                    <td><input type="number" name="ColiformResults" id="ColiformResults" class="btn btn-dark" style="width:75%;" value="{{#if queryResult.ColiformResults}}{{queryResult.ColiformResults}}{{/if}}"></td>
+                    <td><input type="number" name="EcoliResults" id="EcoliResults" class="btn btn-dark" style="width:75%;" value="{{#if queryResult.EcoliResults}}{{queryResult.EcoliResults}}{{/if}}"></td>
+                    <td><input type="number" name="YeastResults" class="btn btn-dark" style="width:75%;" value="{{#if queryResult.YeastResults}}{{queryResult.YeastResults}}{{/if}}"></td>
+                    <td><input type="number" name="MoldResults" class="btn btn-dark" style="width:75%;" value="{{#if queryResult.MoldResults}}{{queryResult.MoldResults}}{{/if}}"></td>
+                    <td><input type="number" name="LacticAcidResults" class="btn btn-dark" style="width:75%;" value="{{#if queryResult.LacticAcidResults}}{{queryResult.LacticAcidResults}}{{/if}}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <table  class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Comments</th>
+                    <th scope="col">IsCulturedIngredient</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><textarea name="Comments" value="" class="btn btn-dark" rows="10" cols="70">{{#if queryResult.Comments}}{{queryResult.Comments}}{{/if}}</textarea></td>
+                    <td>
+                        <select name="IsCulturedIngredient" class="btn btn-dark dropdown-toggle">
+                            <option value="{{#if queryResult.IsCulturedIngredient}}{{queryResult.IsCulturedIngredient}}{{/if}}">{{#if queryResult.IsCulturedIngredient}}{{queryResult.IsCulturedIngredient}}{{/if}}</option>
+                            <option value="FALSE">FALSE</option>
+                            <option value="TRUE">TRUE</option>
+                            <option value="">N/A</option>
+                        </select>
+                    <td>
+                </tr>
+                </tbody>
+            </table>
+        {{/if}}
+        <!-- This is from ENVIRONMENTAL_SWABS table -->
+        {{#if environmental}}
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Date Collected</th>
+                    <th scope="col">Time Collected</th>
+                    <th scope="col">Plant</th>
+                    <th scope="col">SiteIdNumber</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Listeria</th>
+                    <th scope="col">Salmonella</th>
+                </tr>
+                </thead>
+                <input type="text" id="table" name="table" value="environmental" hidden>
+                <input type="text" id="sampID" name="sampID" value="{{#if queryResult.EnvironmentalSwabID}}{{queryResult.EnvironmentalSwabID}}{{/if}}" hidden>
+                <tbody>
+                <tr>
+                    <td><input type="date" name="DateCollected" id="DateCollected" value="{{#if dateCollected}}{{dateCollected}}{{else}}{{queryResult.DateCollected}}{{/if}}" class="btn btn-dark" style="width:90%;"></td>
+                    <td><input type="text" name="TimeCollected" id="TimeCollected" value="{{#if timeCollected}}{{timeCollected}}{{else}}{{queryResult.TimeCollected}}{{/if}}" class="btn btn-dark" style="width:85%;"></td>
+                    <td>
+                        <select name="Plant" id="Plant" class="btn btn-dark dropdown-toggle">
+                            <option value="{{#if plant}}{{plant}}{{else}}{{queryResult.Plant}}{{/if}}">{{#if plant}}{{plant}}{{else}}{{queryResult.Plant}}{{/if}}</option>
+                            {{#each plants}}
+                                <option value="{{this.Plant}}">{{this.Plant}}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td>
+                        <select name="SiteIdNumber" id="SiteIdNumber" class="btn btn-dark dropdown-toggle" onchange="
+                  siteIdNumChange()">
+                            <option value="{{#if queryResult.SiteIdNumber}}{{queryResult.SiteIdNumber}}{{/if}}">{{#if queryResult.SiteIdNumber}}{{queryResult.SiteIdNumber}}{{/if}}</option>
+                            {{#each siteDescriptions}}
+                                <option value="{{this.SiteDescription}}&siteNumber={{this.SiteNumber}}">{{this.SiteNumber}}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td>
+                        <select name="Type" id="Type" class="btn btn-dark dropdown-toggle">
+                            <option value="{{#if savedSampleType}}{{savedSampleType}}{{else}}{{queryResult.Type}}{{/if}}">{{#if savedSampleType}}{{savedSampleType}}{{else}}{{queryResult.Type}}{{/if}}</option>
+                            {{#each types}}
+                                <option value="{{this.Type}}">{{this.Type}}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td>
+                        <select name="ListeriaResult" class="btn btn-dark dropdown-toggle">
+                            <option value="{{#if queryResult.ListeriaResult}}{{queryResult.ListeriaResult}}{{/if}}">{{#if queryResult.ListeriaResult}}{{queryResult.ListeriaResult}}{{/if}}</option>
+                            <option value="N/A">N/A</option>
+                            {{#each resultTable}}
+                                <option value="{{this.Result}}">{{this.Result}}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                    <td>
+                        <select name="SalmonellaResult" class="btn btn-dark dropdown-toggle">
+                            <option value="{{#if queryResult.SalmonellaResult}}{{queryResult.SalmonellaResult}}{{/if}}">{{#if queryResult.SalmonellaResult}}{{queryResult.SalmonellaResult}}{{/if}}</option>
+                            <option value="N/A">N/A</option>
+                            {{#each resultTable}}
+                                <option value="{{this.Result}}">{{this.Result}}</option>
+                            {{/each}}
+                        </select>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Comment</th>
+                    <th scope="col">Location Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><textarea name="Comment" value="" class="btn btn-dark" rows="10" cols="60">{{#if queryResult.Comment}}{{queryResult.Comment}}{{/if}}</textarea></td>
+                    <td><textarea name="LocationDescription" id="LocationDescription" class="btn btn-dark" rows="5">{{#if plantTenIsTrue}}{{#if siteDescription}}{{siteDescription}}{{else}}{{queryResult.LocationDescription}}{{/if}}{{/if}} </textarea></td>
+                </tr>
+                </tbody>
+            </table>
+            <script>
+                function siteIdNumChange() {
+                    document.location.href='updater?table=environmental&siteDescription=' + document.getElementById('SiteIdNumber').value + '&plant=' + document.getElementById('Plant').value + '&timeCollected=' + document.getElementById('TimeCollected').value + '&sampleType=' + document.getElementById('Type').value + '&currentDate=' + document.getElementById('DateCollected').value + '&sampID=' + document.getElementById('sampID').value;
+                }
+            </script>
+        {{/if}}
+        <hr>
+        <button class="btn btn-dark btn-lg">Update Record Now</button>
+    </form>
+    <script>
+        function changeEcoliValue(){
+            if ((document.getElementById('Plant').value == '20' || document.getElementById('Plant').value == '21' || document.getElementById('Plant').value == '23' || document.getElementById('Plant').value == '26') && document.getElementById('ColiformResults').value == '0'){
+                document.getElementById('EcoliResults').value = 0;
+            }
+        }
+    </script>
 {{/if}}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<!-- This is from SAMPLES table -->
-{{#if samples}}
-	<table class="table table-hover">
-  <thead>
-    <tr>
-	  <th scope="col">DateTested</th>
-      <th scope="col">ItemNumber</th>
-      <th scope="col">Plant</th>
-      <th scope="col">Description</th>
-      <th scope="col">UseByDate</th>
-    </tr>
-  </thead>
-
-<input type="text" id="table" name="table" value="samples" hidden>
-<input type="text" id="sampID" name="sampID" value="{{#if queryResult.SampleID}}{{queryResult.SampleID}}{{/if}}" hidden>
-
-<tbody>
-    <tr>
-		
-<td><input type="date" name="DateTested" id="DateTested" value="{{#if dateTested}}{{dateTested}}{{else}}{{queryResult.DateTested}}{{/if}}" class="btn btn-dark" style="width:90%;"></td>		
-		
-<td>	
-<input type="text" name="ItemNumber" id="ItemNumber" class="btn btn-dark dropdown-toggle" onchange="document.location.href='updater?table=samples&ItemNumber=' + document.getElementById('ItemNumber').value + '&itemDescription=' + document.getElementById(document.getElementById('ItemNumber').value).className + '&dateTested=' + document.getElementById('DateTested').value + '&plant=' + document.getElementById('Plant').value + '&sampID=' + {{#if queryResult.SampleID}}{{queryResult.SampleID}}{{/if}}" list="UPCLIST" value="{{#if itemNumber}}{{itemNumber}}{{else}}{{queryResult.ItemNumber}}{{/if}}">      
-<datalist id="UPCLIST">
-	{{#each itemInfo}}
-  <option value="{{this.Item}}" id="{{this.Item}}" class="{{this.ItemDescription}}">{{this.Item}} - {{this.ItemDescription}}</option>
-	{{/each}}
-</datalist>
-</td>
-		
-<td>	
-<select name="Plant" id="Plant" class="btn btn-dark dropdown-toggle" onchange="changeEcoliValue()">
-	 <option value="{{#if plant}}{{plant}}{{else}}{{queryResult.Plant}}{{/if}}">{{#if plant}}{{plant}}{{else}}{{queryResult.Plant}}{{/if}}</option>
-	{{#each plants}}
-  <option value="{{this.Plant}}">{{this.Plant}}</option>
-	{{/each}}
-</select>
-</td>
-
-<td><input type="text" name="Description" id="Description" value="{{#if itemDescription}}{{itemDescription}}{{else}}{{queryResult.Description}}{{/if}}" class="btn btn-dark" style="width:100%;"></td>
-	
-<td><input type="date" name="UseByDate" id="UseByDate" value="{{#if queryResult.UseByDate}}{{queryResult.UseByDate}}{{/if}}" class="btn btn-dark" style="width:90%;"></td>
-
-    </tr>
- </tbody>
-		</table>
-	
-<table  class="table table-hover">
-	<thead>
-    <tr>
-	<th scope="col">Manuf. Date</th>
-      <th scope="col">Manuf. Time</th>
-      <th scope="col">Type</th>
-      <th scope="col">Line</th>
-    </tr>
-  </thead>
-
-<tbody>
-    <tr>	
-		
-	<td><input type="date" name="ManufactureDate" value="{{#if queryResult.ManufactureDate}}{{queryResult.ManufactureDate}}{{/if}}" class="btn btn-dark"></td>
-
-<td><input type="text" name="ManufactureTime" value="{{#if queryResult.ManufactureTime}}{{queryResult.ManufactureTime}}{{/if}}" class="btn btn-dark"></td>
-		
-<td>
-<select name="Type" class="btn btn-dark dropdown-toggle">
-	<option value="{{#if queryResult.Type}}{{queryResult.Type}}{{else}}{{savedSampleType}}{{/if}}">{{#if queryResult.Type}}{{queryResult.Type}}{{else}}{{savedSampleType}}{{/if}}</option>
-	{{#each types}}
-  <option value="{{this.Type}}">{{this.Type}}</option>
-	{{/each}}
-</select>
-</td>
-<td><input type="text" name="Line" value="{{#if queryResult.Line}}{{queryResult.Line}}{{/if}}" class="btn btn-dark"></td>
-	</tr>
-	 </tbody>
-			</table>
-	
-	<table  class="table table-hover">
-	 <thead> 
-    <tr>
-      <th scope="col">APC</th>
-      <th scope="col">Coliform</th>
-      <th scope="col">Ecoli</th>
-      <th scope="col">Yeast</th>
-      <th scope="col">Mold</th>
-	<th scope="col">LacticAcid</th>
-		 </tr>
-  </thead>
-	
-<tbody>
-    <tr>			
-<td><input type="number" name="ApcResults" class="btn btn-dark" style="width:75%;" value="{{#if queryResult.ApcResults}}{{queryResult.ApcResults}}{{/if}}"></td>
-		
-<td><input type="number" name="ColiformResults" id="ColiformResults" class="btn btn-dark" style="width:75%;" value="{{#if queryResult.ColiformResults}}{{queryResult.ColiformResults}}{{/if}}"></td>
-		
-<td><input type="number" name="EcoliResults" id="EcoliResults" class="btn btn-dark" style="width:75%;" value="{{#if queryResult.EcoliResults}}{{queryResult.EcoliResults}}{{/if}}"></td>
-		
-<td><input type="number" name="YeastResults" class="btn btn-dark" style="width:75%;" value="{{#if queryResult.YeastResults}}{{queryResult.YeastResults}}{{/if}}"></td>
-		
-<td><input type="number" name="MoldResults" class="btn btn-dark" style="width:75%;" value="{{#if queryResult.MoldResults}}{{queryResult.MoldResults}}{{/if}}"></td>
-
-<td><input type="number" name="LacticAcidResults" class="btn btn-dark" style="width:75%;" value="{{#if queryResult.LacticAcidResults}}{{queryResult.LacticAcidResults}}{{/if}}"></td>
-
-	</tr>
-		</tbody>
-	</table>
-	
-<table  class="table table-hover">
-	<thead>
-    <tr>
-      <th scope="col">Comments</th>
-      <th scope="col">IsCulturedIngredient</th>
-    </tr>
-  </thead>
-	
-<tbody>
-    <tr>
-						
-<td><textarea name="Comments" value="" class="btn btn-dark" rows="10" cols="70">{{#if queryResult.Comments}}{{queryResult.Comments}}{{/if}}</textarea></td>
-		
-<td><select name="IsCulturedIngredient" class="btn btn-dark dropdown-toggle">
-	<option value="{{#if queryResult.IsCulturedIngredient}}{{queryResult.IsCulturedIngredient}}{{/if}}">{{#if queryResult.IsCulturedIngredient}}{{queryResult.IsCulturedIngredient}}{{/if}}</option>
-	<option value="FALSE">FALSE</option>
-		<option value="TRUE">TRUE</option>
-		<option value="">N/A</option>
-</select><td>
-		
-	</tr>
-		</tbody>
-	
-	</table>
-{{/if}}
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-<!-- This is from ENVIRONMENTAL_SWABS table -->
-{{#if environmental}}
-	<table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">Date Collected</th>
-      <th scope="col">Time Collected</th>
-	   <th scope="col">Plant</th>
-      <th scope="col">SiteIdNumber</th>
-      <th scope="col">Type</th>
-	  <th scope="col">Listeria</th>
-      <th scope="col">Salmonella</th>
-    </tr>
-  </thead>
-
-<input type="text" id="table" name="table" value="environmental" hidden>
-<input type="text" id="sampID" name="sampID" value="{{#if queryResult.EnvironmentalSwabID}}{{queryResult.EnvironmentalSwabID}}{{/if}}" hidden>
-<tbody>
-    <tr>	
-			
-<td><input type="date" name="DateCollected" id="DateCollected" value="{{#if dateCollected}}{{dateCollected}}{{else}}{{queryResult.DateCollected}}{{/if}}" class="btn btn-dark" style="width:90%;"></td>
-<td><input type="text" name="TimeCollected" id="TimeCollected" value="{{#if timeCollected}}{{timeCollected}}{{else}}{{queryResult.TimeCollected}}{{/if}}" class="btn btn-dark" style="width:85%;"></td>
-
-				<td>	
-<select name="Plant" id="Plant" class="btn btn-dark dropdown-toggle">
-	 <option value="{{#if plant}}{{plant}}{{else}}{{queryResult.Plant}}{{/if}}">{{#if plant}}{{plant}}{{else}}{{queryResult.Plant}}{{/if}}</option>
-	{{#each plants}}
-  <option value="{{this.Plant}}">{{this.Plant}}</option>
-	{{/each}}
-</select>
-</td>
-			
-		
-<td>
-<select name="SiteIdNumber" id="SiteIdNumber" class="btn btn-dark dropdown-toggle" onchange="
-siteIdNumChange()">>
-	  <option value="{{#if siteNumber}}{{siteNumber}}{{/if}}">{{#if siteNumber}}{{siteNumber}}{{/if}}</option>
-	{{#each siteDescriptions}}
-  <option value="{{this.SiteDescription}}&siteNumber={{this.SiteNumber}}">{{this.SiteNumber}}</option>
-	{{/each}}
-</select>
-</td>
-		
-		<td>
-<select name="Type" id="Type" class="btn btn-dark dropdown-toggle">
-	<option value="{{#if savedSampleType}}{{savedSampleType}}{{else}}{{queryResult.Type}}{{/if}}">{{#if savedSampleType}}{{savedSampleType}}{{else}}{{queryResult.Type}}{{/if}}</option>
-	{{#each types}}
-  <option value="{{this.Type}}">{{this.Type}}</option>
-	{{/each}}
-</select>
-</td>
-					
-		<td>
-<select name="ListeriaResult" class="btn btn-dark dropdown-toggle">
-<option value="{{#if queryResult.ListeriaResult}}{{queryResult.ListeriaResult}}{{/if}}">{{#if queryResult.ListeriaResult}}{{queryResult.ListeriaResult}}{{/if}}</option>
-<option value="N/A">N/A</option>
-	{{#each resultTable}}
-  <option value="{{this.Result}}">{{this.Result}}</option>
-	{{/each}}
-</select>
-</td>
-		
-		<td>
-<select name="SalmonellaResult" class="btn btn-dark dropdown-toggle">
-	<option value="{{#if queryResult.SalmonellaResult}}{{queryResult.SalmonellaResult}}{{/if}}">{{#if queryResult.SalmonellaResult}}{{queryResult.SalmonellaResult}}{{/if}}</option>
-	<option value="N/A">N/A</option>
-	{{#each resultTable}}
-  <option value="{{this.Result}}">{{this.Result}}</option>
-	{{/each}}
-</select>
-</td>
-		
-    </tr>
- </tbody>
-	</table>
-
-	<table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">Comment</th>      
-	  <th scope="col">Location Description</th>
-    </tr>
-  </thead>
-
-<tbody>
-    <tr>	
-
-	<td><textarea name="Comment" value="" class="btn btn-dark" rows="10" cols="60">{{#if queryResult.Comment}}{{queryResult.Comment}}{{/if}}</textarea></td>
-		
-		<td><textarea name="LocationDescription" id="LocationDescription" class="btn btn-dark" rows="5">{{#if plantTenIsTrue}}{{#if siteDescription}}{{siteDescription}}{{else}}{{queryResult.LocationDescription}}{{/if}}{{/if}} </textarea></td>
-				
-    </tr>
- </tbody>
-	</table>
-	<script>
-	function siteIdNumChange() {	
-	document.location.href='updater?table=environmental&siteDescription=' + document.getElementById('SiteIdNumber').value + '&plant=' + document.getElementById('Plant').value + '&timeCollected=' + document.getElementById('TimeCollected').value + '&sampleType=' + document.getElementById('Type').value + '&currentDate=' + document.getElementById('DateCollected').value + '&sampID=' + document.getElementById('sampID').value;
-}
-</script>
-{{/if}}
-
-	
-<hr>
-<button class="btn btn-dark btn-lg">Update Record Now</button>
-</form>
-
-<script>
-		function changeEcoliValue(){
-	if ((document.getElementById('Plant').value == '20' || document.getElementById('Plant').value == '21' || document.getElementById('Plant').value == '23' || document.getElementById('Plant').value == '26') && document.getElementById('ColiformResults').value == '0'){
-		document.getElementById('EcoliResults').value = 0;
-	}
-} 
-</script>
-	{{/if}}

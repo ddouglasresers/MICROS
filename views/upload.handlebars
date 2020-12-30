@@ -1,52 +1,48 @@
 {{#unless table}}
-	   <center>
-      <div class="col-lg-63 mb-3">
-         <div class="card">
-            <h5 class="card-header">Choose the database table that you will be uploading to</h5>
-            <div class="card-body">
-               <div class="form-group mb-4">
-   <button type="submit" class="btn btn-info btn-lg" onclick="location.href='upload?table=samples';">Samples Table</button>
-   <button type="submit" class="btn btn-info btn-lg" onclick="location.href='upload?table=swabs';">Swabs Table</button>
-				   <br> <hr>
-   <button type="submit" class="btn btn-info btn-lg" onclick="location.href='upload?table=environmental';">Environmental Swabs Table</button>
-               </div>
+    <div style="text-align: center;">
+        <div class="col-lg-63 mb-3">
+            <div class="card">
+                <h5 class="card-header">Choose the database table that you will be uploading to</h5>
+                <div class="card-body">
+                    <div class="form-group mb-4">
+                        <button type="submit" class="btn btn-info btn-lg" onclick="location.href='upload?table=samples';">Samples Table</button>
+                        <button type="submit" class="btn btn-info btn-lg" onclick="location.href='upload?table=swabs';">Swabs Table</button>
+                        <br>
+                        <hr>
+                        <button type="submit" class="btn btn-info btn-lg" onclick="location.href='upload?table=environmental';">Environmental Swabs Table</button>
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
-   </center>
+        </div>
+    </div>
 {{/unless}}
-
-
 {{#if table}}
-	<center>
-	      <div class="col-lg-63 mb-3">
-         <div class="card">
-            <h5 class="card-header">Upload spreadsheet to the {{table}} table.</h5>
-            <div class="card-body">
-               <div class="form-group mb-4">
-				   
-	<form method="post" enctype="multipart/form-data">			   
-<input class="btn btn-info btn-lg" type="file" name="filetoupload"><br><br>
-<input class="btn btn-info btn-lg" type="submit">
-<br><br>** Before uploading file, you must save it as a <b>tab-delimited .txt</b> file in Excel.
-				   <br><hr><br>
-	</form>
-			   
-				   {{#if samples}}
-						   <button type="submit" class="btn btn-danger" onclick="location.href='images/samples.xlsx';">Download spreadsheet template for Samples tables</button>
-				   {{/if}}
-
-				   	{{#if swabs}}
-						   <button type="submit" class="btn btn-danger" onclick="location.href='images/swabs.xlsx';">Download spreadsheet template for Swabs tables</button>
-				   {{/if}}
-				   
-				   	{{#if environmental}}
-						   <button type="submit" class="btn btn-danger" onclick="location.href='images/environmental.xlsx';">Download spreadsheet template for Environmental Swabs tables</button>
-				   {{/if}}
-				   
-               </div>
+    <div style="text-align: center;">
+        <div class="col-lg-63 mb-3">
+            <div class="card">
+                <h5 class="card-header">Upload spreadsheet to the {{table}} table.</h5>
+                <div class="card-body">
+                    <div class="form-group mb-4">
+                        <form method="post" enctype="multipart/form-data">
+                            <input class="btn btn-info btn-lg" type="file" name="filetoupload"><br><br>
+                            <input class="btn btn-info btn-lg" type="submit">
+                            <br><br>** Before uploading file, you must save it as a <b>tab-delimited .txt</b> file in Excel.
+                            <br>
+                            <hr>
+                            <br>
+                        </form>
+                        {{#if samples}}
+                            <button type="submit" class="btn btn-danger" onclick="location.href='images/samples.xlsx';">Download spreadsheet template for Samples tables</button>
+                        {{/if}}
+                        {{#if swabs}}
+                            <button type="submit" class="btn btn-danger" onclick="location.href='images/swabs.xlsx';">Download spreadsheet template for Swabs tables</button>
+                        {{/if}}
+                        {{#if environmental}}
+                            <button type="submit" class="btn btn-danger" onclick="location.href='images/environmental.xlsx';">Download spreadsheet template for Environmental Swabs tables</button>
+                        {{/if}}
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
-	   </center>
+        </div>
+    </div>
 {{/if}}
